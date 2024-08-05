@@ -3,6 +3,8 @@
 #include <unistd.h>  // For sleep()
 
 const char *RECORDS = "./data/records.txt";
+const char *USER = "./data/users.txt";
+
 
 // int getAccountFromFile(FILE *ptr, char name[50], struct Record *r) {
 //     return fscanf(ptr, "%s %d", name, &r->accountNbr) == 2;
@@ -26,12 +28,13 @@ int getAccountFromFile(FILE *ptr, char name[50], struct Record *r)
               //  return ret;
 }
 
-void saveAccountToFile(FILE *ptr, struct User u, struct Record r)
+void saveAccountToAccountFile(FILE *ptr, struct User u, struct Record r)
 {
-    fprintf(ptr, "%d %d %s %d %d/%d/%d %s %d %.2lf %s\n\n",
+    fprintf(ptr, "%d %d %s %s %d %d/%d/%d %s %d %.2lf %s\n\n",
             r.id,
 	        u.id,
 	        u.name,
+            u.password,
             r.accountNbr,
             r.deposit.month,
             r.deposit.day,
@@ -40,6 +43,14 @@ void saveAccountToFile(FILE *ptr, struct User u, struct Record r)
             r.phone,
             r.amount,
             r.accountType);
+}
+
+void saveAccountToLoginFile(FILE *ptr, struct User u, struct Record r)
+{
+    fprintf(ptr, "%d %s %s\n\n",
+            r.id,
+	        u.name,
+            u.password);
 }
 
 void stayOrReturn(int notGood, void f(struct User u), struct User u)
@@ -110,7 +121,12 @@ void createNewAcc(struct User u)
     struct Record cr;
     char userName[50];
     FILE *pf = fopen(RECORDS, "a+");
+    FILE *pg = fopen(USER, "a+");
     if (pf == NULL) {
+        printf("Error opening file.\n");
+        return;
+    }
+    if (pg == NULL) {
         printf("Error opening file.\n");
         return;
     }
@@ -125,6 +141,8 @@ noAccount:
     scanf("%d/%d/%d", &r.deposit.month, &r.deposit.day, &r.deposit.year);
     printf("\nEnter username:");
     scanf("%49s", u.name);
+    printf("\nEnter password:");
+    scanf("%49s", u.password);
     printf("\nEnter the account number:");
     scanf("%d", &r.accountNbr);
     //  if (scanf("%d", &r.accountNbr) != 1) {
@@ -136,9 +154,11 @@ noAccount:
     // printf(res)
     while (getAccountFromFile(pf, userName, &cr) != EOF)
     {
-        // printf("Username: %s\n", userName);
-        // printf("U.name: %s\n", u.name);
-        // printf("User: %d\n", cr.accountNbr);
+    //    printf("Username: %s\n", userName);
+    //      printf("U.name: %s\n", u.name);
+    //      printf("Acc: %d\n", cr.accountNbr);
+    //      printf("Acc2: %d\n", r.accountNbr);
+
         if (strcmp(userName, u.name) == 0)
         {
             if(cr.accountNbr == r.accountNbr) {
@@ -160,9 +180,11 @@ noAccount:
     printf("\nChoose the type of account:\n\t-> saving\n\t-> current\n\t-> fixed01(for 1 year)\n\t-> fixed02(for 2 years)\n\t-> fixed03(for 3 years)\n\n\tEnter your choice:");
     scanf("%s", r.accountType);
 
-    saveAccountToFile(pf, u, r);
+    saveAccountToAccountFile(pf, u, r);
+    saveAccountToLoginFile(pg, u, r);
 
     fclose(pf);
+    fclose(pg);
     success(u);
 }
 
