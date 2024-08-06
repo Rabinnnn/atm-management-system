@@ -121,18 +121,11 @@ void createNewAcc(struct User u)
     struct Record cr;
     char userName[50];
     FILE *pf = fopen(RECORDS, "a+");
-    FILE *pg = fopen(USER, "a+");
     if (pf == NULL) {
         printf("Error opening file.\n");
         return;
     }
-    if (pg == NULL) {
-        printf("Error opening file.\n");
-        return;
-    }
-
-    
-
+  
 noAccount:
     system("clear");
     printf("\t\t\t===== New record =====\n");
@@ -145,13 +138,7 @@ noAccount:
     scanf("%49s", u.password);
     printf("\nEnter the account number:");
     scanf("%d", &r.accountNbr);
-    //  if (scanf("%d", &r.accountNbr) != 1) {
-    //     printf("Invalid account number\n");
-    //     fclose(pf);
-    //    // return 1;
-    // }
-    // res = getAccountFromFile(pf, userName, &cr)
-    // printf(res)
+  
     while (getAccountFromFile(pf, userName, &cr) != EOF)
     {
     //    printf("Username: %s\n", userName);
@@ -169,6 +156,12 @@ noAccount:
             }
            
         }
+         if(cr.accountNbr == r.accountNbr) {
+                printf("✖ This Account already exists!\n\n");
+                sleep(3);  // Sleep for 2 seconds
+                goto noAccount;
+
+            }
     }
     
     printf("\nEnter the country:");
@@ -181,11 +174,47 @@ noAccount:
     scanf("%s", r.accountType);
 
     saveAccountToAccountFile(pf, u, r);
-    saveAccountToLoginFile(pg, u, r);
 
     fclose(pf);
+    success(u);
+}
+
+void signUp(struct User u)
+{
+    struct Record r;
+    struct Record cr;
+    char userName[50];
+
+        FILE *pg = fopen(USER, "a+");
+          if (pg == NULL) {
+             printf("Error opening file.\n");
+             return;
+          }
+    noUser:
+    system("clear");
+    printf("\t\t\t===== Sign Up =====\n");
+
+    printf("\nEnter username:");
+    scanf("%49s", u.name);
+     //while (getAccountFromFile(pg, userName, &cr) != EOF)
+    // {
+
+    //     if (strcmp(userName, u.name) == 0)
+    //     {
+    //             printf("✖ This name has already been taken!\n\n");
+    //             sleep(2);  // Sleep for 2 seconds
+    //             goto noUser;     
+           
+    //     }
+       
+    // }
+    printf("\nEnter password:");
+    scanf("%49s", u.password);
+
+    saveAccountToLoginFile(pg, u, r);
     fclose(pg);
     success(u);
+
 }
 
 void checkAllAccounts(struct User u)

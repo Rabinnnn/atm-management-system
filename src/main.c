@@ -59,15 +59,19 @@ void initMenu(struct User *u)
     system("clear");
     printf("\n\n\t\t======= ATM =======\n");
     printf("\n\t\t-->> Feel free to login / register :\n");
-    printf("\n\t\t[1]- login\n");
-    printf("\n\t\t[2]- register\n");
-    printf("\n\t\t[3]- exit\n");
+    printf("\n\t\t[1]- sign up\n");
+    printf("\n\t\t[2]- login\n");
+    printf("\n\t\t[3]- register\n");
+    printf("\n\t\t[4]- exit\n");
     while (!r)
     {
         scanf("%d", &option);
         switch (option)
         {
-        case 1:
+        case 1: 
+            signUp(*u);
+            break;
+        case 2:
             loginMenu(u->name, u->password);
             if (strcmp(u->password, getPassword(*u)) == 0)
             {
@@ -80,12 +84,12 @@ void initMenu(struct User *u)
             }
             r = 1;
             break;
-        case 2:
+        case 3:
             // student TODO : add your **Registration** function
             // here
             r = 1;
             break;
-        case 3:
+        case 4:
             exit(1);
             break;
         default:

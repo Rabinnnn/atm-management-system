@@ -2,5 +2,3 @@
 
 1 1 Michel 2 2/5/2001 Portugal 123543455 10023.230000 fixed01
 
-0 1 rabin 987 4/45/33 adjfd 0 0.00 dnfdks
-
