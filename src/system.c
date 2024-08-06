@@ -12,18 +12,33 @@ const char *USER = "./data/users.txt";
 
 int getAccountFromFile(FILE *ptr, char name[50], struct Record *r)
 {
-/*int ret =*/return  fscanf(ptr, "%d %d %s %d %d/%d/%d %s %d %lf %s",
+    int result = fscanf(ptr, "%d %d %s %d %d/%d/%d %s %d %lf %s",
+                        &r->id,
+                        &r->userId,
+                        name,
+                        &r->accountNbr,
+                        &r->deposit.month,
+                        &r->deposit.day,
+                        &r->deposit.year,
+                        r->country,
+                        &r->phone,
+                        &r->amount,
+                        r->accountType);
+    if (result == EOF) {
+        return EOF;  // Indicate end of file or read error
+    }
+    // Ensure that name is copied to r->name if needed
+    strcpy(r->name, name);
+    return 1;  // Indicate successful read
+}
+
+
+
+int getAccountFromUser(FILE *ptr, char name[50], struct User *r)
+{
+/*int ret =*/return  fscanf(ptr, "%d %s",
                   &r->id,
-		          &r->userId,
-		          name,
-                  &r->accountNbr,
-                  &r->deposit.month,
-                  &r->deposit.day,
-                  &r->deposit.year,
-                  r->country,
-                  &r->phone,
-                  &r->amount,
-                  r->accountType);
+		          name);
               //  printf("RET: %d\n", ret);
               //  return ret;
 }
@@ -45,7 +60,7 @@ void saveAccountToAccountFile(FILE *ptr, struct User u, struct Record r)
             r.accountType);
 }
 
-void saveAccountToLoginFile(FILE *ptr, struct User u, struct Record r)
+void saveAccountToLoginFile(FILE *ptr, struct User u, struct User r)
 {
     fprintf(ptr, "%d %s %s\n\n",
             r.id,
@@ -134,6 +149,21 @@ noAccount:
     scanf("%d/%d/%d", &r.deposit.month, &r.deposit.day, &r.deposit.year);
     printf("\nEnter username:");
     scanf("%49s", u.name);
+
+    while (getAccountFromFile(pf, userName, &cr) != EOF)
+    {
+        // printf("file:%s\n", u.name);
+        // printf("user:%s\n", userName);
+   
+        if (strcmp(userName, u.name) == 0)
+        {       
+                printf("✖ This name has already been taken!\n\n");
+                sleep(3);  // Sleep for 2 seconds
+                goto noAccount;      
+        }
+      
+      
+    }
     printf("\nEnter password:");
     scanf("%49s", u.password);
     printf("\nEnter the account number:");
@@ -156,12 +186,12 @@ noAccount:
             }
            
         }
-         if(cr.accountNbr == r.accountNbr) {
+        if(cr.accountNbr == r.accountNbr) {
                 printf("✖ This Account already exists!\n\n");
                 sleep(3);  // Sleep for 2 seconds
                 goto noAccount;
 
-            }
+        }
     }
     
     printf("\nEnter the country:");
@@ -181,8 +211,8 @@ noAccount:
 
 void signUp(struct User u)
 {
-    struct Record r;
-    struct Record cr;
+    struct User r;
+    struct User cr;
     char userName[50];
 
         FILE *pg = fopen(USER, "a+");
@@ -196,18 +226,19 @@ void signUp(struct User u)
 
     printf("\nEnter username:");
     scanf("%49s", u.name);
-     //while (getAccountFromFile(pg, userName, &cr) != EOF)
-    // {
-
-    //     if (strcmp(userName, u.name) == 0)
-    //     {
-    //             printf("✖ This name has already been taken!\n\n");
-    //             sleep(2);  // Sleep for 2 seconds
-    //             goto noUser;     
+     while (getAccountFromUser(pg, userName, &cr) != EOF)
+    {
+            //  printf("Username: %s\n", userName);
+            // printf("U.name: %s\n", u.name);
+        if (strcmp(userName, u.name) == 0)
+        {
+                printf("✖ This name has already been taken!\n\n");
+                sleep(2);  // Sleep for 2 seconds
+                goto noUser;     
            
-    //     }
+        }
        
-    // }
+    }
     printf("\nEnter password:");
     scanf("%49s", u.password);
 
