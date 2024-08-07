@@ -1,5 +1,4 @@
 #include "header.h"
-#include <stdio.h>
 #include <unistd.h>  // For sleep()
 
 const char *RECORDS = "./data/records.txt";
@@ -12,25 +11,18 @@ const char *USER = "./data/users.txt";
 
 int getAccountFromFile(FILE *ptr, char name[50], struct Record *r)
 {
-    int result = fscanf(ptr, "%d %d %s %d %d/%d/%d %s %d %lf %s",
-                        &r->id,
-                        &r->userId,
-                        name,
-                        &r->accountNbr,
-                        &r->deposit.month,
-                        &r->deposit.day,
-                        &r->deposit.year,
-                        r->country,
-                        &r->phone,
-                        &r->amount,
-                        r->accountType);
-    if (result == EOF) {
-        return EOF;  // Indicate end of file or read error
-    }
-   //move file pointer to the beginning of the next line
-   fseek(ptr, 1, SEEK_CUR);//move 1 byte forward
-   
-   return 0;
+    return fscanf(ptr, "%d %d %s %d %d/%d/%d %s %d %lf %s",
+                  &r->id,
+		  &r->userId,
+		  name,
+                  &r->accountNbr,
+                  &r->deposit.month,
+                  &r->deposit.day,
+                  &r->deposit.year,
+                  r->country,
+                  &r->phone,
+                  &r->amount,
+                  r->accountType) != EOF;
 }
 
 
@@ -141,14 +133,23 @@ void createNewAcc(struct User u)
         printf("Error opening file.\n");
         return;
     }
+    int ind = 0;
   
 noAccount:
     system("clear");
     printf("\t\t\t===== New record =====\n");
-
+date:
     printf("\nEnter today's date(mm/dd/yyyy):");
     scanf("%d/%d/%d", &r.deposit.month, &r.deposit.day, &r.deposit.year);
-    printf("\nEnter username:");
+    if(r.deposit.month <= 0 || r.deposit.month > 12 ||
+        r.deposit.day <= 0 || r.deposit.day > 31 ||
+        r.deposit.year < 1900 || r.deposit.year > 3000){
+        printf("Invalid date. Usage Example: 8/8/2024\n");
+         sleep(2);
+        goto date;
+    }
+    
+   /* printf("\nEnter username:");
     scanf("%49s", u.name);
 
     while (getAccountFromFile(pf, userName, &cr) != EOF)
@@ -164,45 +165,59 @@ noAccount:
         }
       
       
-    }
-    printf("\nEnter password:");
-    scanf("%49s", u.password);
+    } */
+    // printf("\nEnter password:");
+    // scanf("%49s", u.password);
+accountNo:
     printf("\nEnter the account number:");
     scanf("%d", &r.accountNbr);
-  
-    while (getAccountFromFile(pf, userName, &cr) != EOF)
+    if (r.accountNbr <= 0)
     {
-    //    printf("Username: %s\n", userName);
-    //      printf("U.name: %s\n", u.name);
-    //      printf("Acc: %d\n", cr.accountNbr);
-    //      printf("Acc2: %d\n", r.accountNbr);
-
-        if (strcmp(userName, u.name) == 0)
-        {
-            if(cr.accountNbr == r.accountNbr) {
-                printf("✖ This Account already exists for this user\n\n");
-                sleep(3);  // Sleep for 2 seconds
-                goto noAccount;
-
-            }
-           
-        }
-        if(cr.accountNbr == r.accountNbr) {
-                printf("✖ This Account already exists!\n\n");
-                sleep(3);  // Sleep for 2 seconds
-                goto noAccount;
-
-        }
+        printf("Invalid account number. Use only positive numbers!\n");
+         sleep(2);
+        goto accountNo;
     }
-    
+  
+     while (getAccountFromFile(pf, userName, &cr))
+    {
+        if (strcmp(userName, u.name) == 0 && cr.accountNbr == r.accountNbr)
+        {
+            printf("\n✖ This Account already exists for this user\n\n");
+            goto noAccount;
+        }
+        ind++;
+    }
+    r.id = ind;
     printf("\nEnter the country:");
     scanf("%s", r.country);
+phone:
     printf("\nEnter the phone number:");
     scanf("%d", &r.phone);
+    if(r.phone == 0){
+        printf("Invalid phone number.\n");
+         sleep(2);
+        goto phone;
+    }
+amount:
     printf("\nEnter amount to deposit: $");
     scanf("%lf", &r.amount);
+    if(r.amount <= 0 || r.amount > 999999){
+        printf("\nInvalid amount! You can only deposit in the range 1 - 999999\n");
+         sleep(2);
+        goto amount;
+    }
+accType:
     printf("\nChoose the type of account:\n\t-> saving\n\t-> current\n\t-> fixed01(for 1 year)\n\t-> fixed02(for 2 years)\n\t-> fixed03(for 3 years)\n\n\tEnter your choice:");
     scanf("%s", r.accountType);
+     if (strcmp(r.accountType, "current") != 0 &&
+        strcmp(r.accountType, "saving") != 0 &&
+        strcmp(r.accountType, "fixed01") != 0 &&
+        strcmp(r.accountType, "fixed02") != 0 &&
+        strcmp(r.accountType, "fixed03") != 0){
+        printf("\nPlease choose and enter one of the listed options.\n");
+         sleep(2);
+        goto accType;
+    }
 
     saveAccountToAccountFile(pf, u, r);
 
@@ -227,19 +242,19 @@ void signUp(struct User u)
 
     printf("\nEnter username:");
     scanf("%49s", u.name);
-     while (getAccountFromUser(pg, userName, &cr) != EOF)
-    {
-            //  printf("Username: %s\n", userName);
-            // printf("U.name: %s\n", u.name);
-        if (strcmp(userName, u.name) == 0)
-        {
-                printf("✖ This name has already been taken!\n\n");
-                sleep(2);  // Sleep for 2 seconds
-                goto noUser;     
-           
-        }
+    // while (getAccountFromUser(pg, userName, &cr) != EOF)
+    // {
        
-    }
+    //     if (strcmp(userName, u.name) == 0)
+    //     {
+    //             printf("✖ This name has already been taken!\n\n");
+    //             sleep(2);  // Sleep for 2 seconds
+    //             goto noUser;     
+           
+    //     }
+       
+    // } 
+    
     printf("\nEnter password:");
     scanf("%49s", u.password);
 

@@ -20,6 +20,7 @@ void mainMenu(struct User u)
     {
     case 1:
         createNewAcc(u);
+        
         break;
     case 2:
         // student TODO : add your **Update account information** function
@@ -70,10 +71,20 @@ void initMenu(struct User *u)
         {
         case 1: 
             signUp(*u);
+            if (strcmp(u->password, getPassword(u)) != 0)
+            {
+                printf("\n\nSignup successful!");
+            }
+            else
+            {
+                printf("\nThe user already exist!\n");
+                exit(1);
+            }
+            r = 1;
             break;
         case 2:
             loginMenu(u->name, u->password);
-            if (strcmp(u->password, getPassword(*u)) == 0)
+            if (strcmp(u->password, getPassword(u)) == 0)
             {
                 printf("\n\nPassword Match!");
             }
