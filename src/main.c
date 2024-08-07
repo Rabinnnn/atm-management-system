@@ -78,7 +78,7 @@ void initMenu(struct User *u)
             }
             else
             {
-                printf("\nWrong password!! or User Name\n");
+                printf("\nYou've entered wrong credentials!\n");
                 exit(1);
             }
             r = 1;
