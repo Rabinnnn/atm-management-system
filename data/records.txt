@@ -8,11 +8,4 @@
 3 2 rabin 777 3/4/2020 kenya 899888 54.00 saving
 
 
-3 2 rabin 555 4/3/2021 kenya 45533 33.00 saving
-
-
-4 2 rabin 4000 3/3/2000 kenya 73883 33.00 saving
-
-
-5 2 rabin 555 3/3/2000 kenya 75885 55.00 saving
 
