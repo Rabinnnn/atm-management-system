@@ -53,13 +53,13 @@ void saveAccountToAccountFile(FILE *ptr, struct User u, struct Record r)
             r.accountType);
 }
 
-void saveAccountToLoginFile(FILE *ptr, struct User u, struct User r)
-{
-    fprintf(ptr, "%d %s %s\n\n",
-            r.id,
-	        u.name,
-            u.password);
-}
+// void saveAccountToLoginFile(FILE *ptr, struct User u, struct User r)
+// {
+//     fprintf(ptr, "%d %s %s\n\n",
+//             r.id,
+// 	        u.name,
+//             u.password);
+// }
 
 void stayOrReturn(int notGood, void f(struct User u), struct User u)
 {
@@ -225,44 +225,44 @@ accType:
     success(u);
 }
 
-void signUp(struct User u)
-{
-    struct User r;
-    struct User cr;
-    char userName[50];
+// void signUp(struct User u)
+// {
+//     struct User r;
+//     struct User cr;
+//     char userName[50];
 
-        FILE *pg = fopen(USER, "a+");
-          if (pg == NULL) {
-             printf("Error opening file.\n");
-             return;
-          }
-    noUser:
-    system("clear");
-    printf("\t\t\t===== Sign Up =====\n");
+//         FILE *pg = fopen(USER, "a+");
+//           if (pg == NULL) {
+//              printf("Error opening file.\n");
+//              return;
+//           }
+//     noUser:
+//     system("clear");
+//     printf("\t\t\t===== Sign Up =====\n");
 
-    printf("\nEnter username:");
-    scanf("%49s", u.name);
-    // while (getAccountFromUser(pg, userName, &cr) != EOF)
-    // {
+//     printf("\nEnter username:");
+//     scanf("%49s", u.name);
+//     // while (getAccountFromUser(pg, userName, &cr) != EOF)
+//     // {
        
-    //     if (strcmp(userName, u.name) == 0)
-    //     {
-    //             printf("✖ This name has already been taken!\n\n");
-    //             sleep(2);  // Sleep for 2 seconds
-    //             goto noUser;     
+//     //     if (strcmp(userName, u.name) == 0)
+//     //     {
+//     //             printf("✖ This name has already been taken!\n\n");
+//     //             sleep(2);  // Sleep for 2 seconds
+//     //             goto noUser;     
            
-    //     }
+//     //     }
        
-    // } 
+//     // } 
     
-    printf("\nEnter password:");
-    scanf("%49s", u.password);
+//     printf("\nEnter password:");
+//     scanf("%49s", u.password);
 
-    saveAccountToLoginFile(pg, u, r);
-    fclose(pg);
-    success(u);
+//     saveAccountToLoginFile(pg, u, r);
+//     fclose(pg);
+//     success(u);
 
-}
+// }
 
 void checkAllAccounts(struct User u)
 {
@@ -291,4 +291,19 @@ void checkAllAccounts(struct User u)
     }
     fclose(pf);
     success(u);
+}
+
+
+int getUserId(char *name){
+    FILE *pf = fopen("./data/users.txt", "r+");
+
+    char id[5];
+    struct User temp;
+    while(fscanf(pf, "%s %s %s", id, temp.name, temp.password) != EOF){
+        if(strcmp(temp.name, name) == 0){
+            return atoi(id);
+        }
+    }
+
+    return -1;
 }

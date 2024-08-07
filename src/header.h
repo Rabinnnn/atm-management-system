@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
+
 
 struct Date
 {
@@ -31,12 +33,20 @@ struct User
 
 // authentication functions
 void loginMenu(char a[50], char pass[50]);
-//void signUpMenu(char a[50], char pass[50]);
-void registerMenu(char a[50], char pass[50]);
+void signUpMenu(char a[50], char pass[50]);
+//void registerMenu(char a[50], char pass[50]);
 const char *getPassword(struct User *u);
 
 // system function
-void signUp(struct User u);
+//void signUp(struct User u);
 void createNewAcc(struct User u);
 void mainMenu(struct User u);
 void checkAllAccounts(struct User u);
+
+//secondary funcs
+bool IsNameContained(char *name);
+bool isContain(char array[100][100], char* str);
+int getUserId(char *name);
+bool usersChecker();
+bool recordsChecker();
+bool IsAccountNumContained(int num, struct User u);
