@@ -27,9 +27,10 @@ int getAccountFromFile(FILE *ptr, char name[50], struct Record *r)
     if (result == EOF) {
         return EOF;  // Indicate end of file or read error
     }
-    // Ensure that name is copied to r->name if needed
-    strcpy(r->name, name);
-    return 1;  // Indicate successful read
+   //move file pointer to the beginning of the next line
+   fseek(ptr, 1, SEEK_CUR);//move 1 byte forward
+   
+   return 0;
 }
 
 
