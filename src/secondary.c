@@ -119,7 +119,7 @@ bool recordsChecker(){
             strcmp(accountType, "fixed01") != 0 &&
             strcmp(accountType, "fixed02") != 0 &&
             strcmp(accountType, "fixed03") != 0 &&
-            strcmp(accountType, "saving") != 0){
+            strcmp(accountType, "savings") != 0){
             printf("5");
             return false;
         }

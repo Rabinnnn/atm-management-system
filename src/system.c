@@ -36,13 +36,12 @@ int getAccountFromUser(FILE *ptr, char name[50], struct User *r)
               //  return ret;
 }
 
-void saveAccountToAccountFile(FILE *ptr, struct User u, struct Record r)
+void saveAccountToFile(FILE *ptr, struct User u, struct Record r)
 {
-    fprintf(ptr, "%d %d %s %s %d %d/%d/%d %s %d %.2lf %s\n\n",
+    fprintf(ptr, "%d %d %s %d %d/%d/%d %s %d %.2lf %s\n\n",
             r.id,
 	        u.id,
 	        u.name,
-            u.password,
             r.accountNbr,
             r.deposit.month,
             r.deposit.day,
@@ -51,7 +50,7 @@ void saveAccountToAccountFile(FILE *ptr, struct User u, struct Record r)
             r.phone,
             r.amount,
             r.accountType);
-}
+} 
 
 void saveRecordToFile(FILE *ptr, struct Record r)
 {
@@ -222,10 +221,10 @@ amount:
         goto amount;
     }
 accType:
-    printf("\nChoose the type of account:\n\t-> saving\n\t-> current\n\t-> fixed01(for 1 year)\n\t-> fixed02(for 2 years)\n\t-> fixed03(for 3 years)\n\n\tEnter your choice:");
+    printf("\nChoose the type of account:\n\t-> savings\n\t-> current\n\t-> fixed01(for 1 year)\n\t-> fixed02(for 2 years)\n\t-> fixed03(for 3 years)\n\n\tEnter your choice:");
     scanf("%s", r.accountType);
      if (strcmp(r.accountType, "current") != 0 &&
-        strcmp(r.accountType, "saving") != 0 &&
+        strcmp(r.accountType, "savings") != 0 &&
         strcmp(r.accountType, "fixed01") != 0 &&
         strcmp(r.accountType, "fixed02") != 0 &&
         strcmp(r.accountType, "fixed03") != 0){
@@ -234,8 +233,8 @@ accType:
         goto accType;
     }
 
-    saveAccountToAccountFile(pf, u, r);
-
+   // saveAccountToAccountFile(pf, u, r);
+    saveAccountToFile(pf, u, r);
     fclose(pf);
     success(u);
 }
@@ -361,4 +360,64 @@ void updateAccountInfo(struct User u, int accountNum, int choice){
 
     fclose(pf);
     success(u);
+}
+
+void checkDetailOfAccount(struct User u, int accountNum){
+    char userName[100];
+    struct Record r;
+    FILE *pf = fopen(RECORDS, "r");
+
+    system("clear");
+    while (getAccountFromFile(pf, userName, &r))
+    {
+        if (strcmp(userName, u.name) == 0 &&
+            r.accountNbr == accountNum)
+        {
+            printf("\nOwner:%s\nAccount number:%d\nDeposit Date:%d/%d/%d \ncountry:%s \nPhone number:%d \nAmount deposited: $%.2f \nType Of Account:%s\n",
+                    userName,
+                    r.accountNbr,
+                    r.deposit.day,
+                    r.deposit.month,
+                    r.deposit.year,
+                    r.country,
+                    r.phone,
+                    r.amount,
+                    r.accountType);
+
+            float rate;
+            if(strcmp(r.accountType, "savings") == 0){
+                rate = 0.07;
+                float interest = r.amount * (1 + rate / 12) - r.amount;
+                printf(" -> You will get $%.2f as interest on day 10 of every month\n", interest);
+            }
+            else if(strcmp(r.accountType, "fixed01") == 0){
+                rate = 0.04;
+                float interest = r.amount * (1 + rate / 12) - r.amount;
+                interest *= 12;
+                printf(" -> You will get $%.2f as interest on %d/%d/%d\n", interest, 
+                    r.deposit.month, r.deposit.day, r.deposit.year+1);
+            }
+            else if(strcmp(r.accountType, "fixed02") == 0){
+                rate = 0.05;
+                float interest = r.amount * (1 + rate / 12) - r.amount;
+                interest *= 24;
+                printf(" -> You will get $%.2f as interest on %d/%d/%d\n", interest, 
+                    r.deposit.month, r.deposit.day, r.deposit.year+2);
+            }
+            else if(strcmp(r.accountType, "fixed03") == 0){
+                rate = 0.08;
+                float interest = r.amount * (1 + rate / 12) - r.amount;
+                interest *= 36;
+                printf(" -> You will get $%.2f as interest on %d/%d/%d\n", interest, 
+                    r.deposit.month, r.deposit.day, r.deposit.year+3);
+            }
+            else{
+                printf("You will not get interests because the account is of type current\n");
+            }
+
+            fclose(pf);
+            success(u);
+        }
+    }
+
 }

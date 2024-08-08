@@ -30,7 +30,7 @@ void mainMenu(struct User u)
         scanf("%d", &accountNum);
         if (!IsAccountNumContained(accountNum, u)){
             system("clear");
-            printf("The account doesn't exist!");
+            printf("This account does not exist!");
             mainMenu(u);
         }
         printf("\nWhich field would you like to change?\n1-> phone number\n2-> country\n");
@@ -40,7 +40,14 @@ void mainMenu(struct User u)
         break;
     case 3:
         // student TODO : add your **Check the details of existing accounts** function
-        // here
+        printf("Enter account number:");
+        scanf("%d", &accountNum);
+        if (!IsAccountNumContained(accountNum, u)){
+            system("clear");
+            printf("This account does not exist.");
+            mainMenu(u);
+        }
+        checkDetailOfAccount(u, accountNum);
         break;
     case 4:
         checkAllAccounts(u);
