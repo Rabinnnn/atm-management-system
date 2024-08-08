@@ -40,6 +40,7 @@ const char *getPassword(struct User *u);
 void createNewAcc(struct User u);
 void mainMenu(struct User u);
 void checkAllAccounts(struct User u);
+void updateAccountInfo(struct User u, int accountNum, int commandNum);
 
 //secondary funcs
 bool IsNameContained(char *name);

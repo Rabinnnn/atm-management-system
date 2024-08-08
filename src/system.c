@@ -53,6 +53,21 @@ void saveAccountToAccountFile(FILE *ptr, struct User u, struct Record r)
             r.accountType);
 }
 
+void saveRecordToFile(FILE *ptr, struct Record r)
+{
+    fprintf(ptr, "%d %d %s %d %d/%d/%d %s %d %.2lf %s\n\n",
+            r.id,
+	        r.userId,
+	        r.name,
+            r.accountNbr,
+            r.deposit.month,
+            r.deposit.day,
+            r.deposit.year,
+            r.country,
+            r.phone,
+            r.amount,
+            r.accountType);
+}
 // void saveAccountToLoginFile(FILE *ptr, struct User u, struct User r)
 // {
 //     fprintf(ptr, "%d %s %s\n\n",
@@ -306,4 +321,44 @@ int getUserId(char *name){
     }
 
     return -1;
+}
+
+void updateAccountInfo(struct User u, int accountNum, int choice){
+    char userName[100];
+    struct Record r;
+    struct Record arr[100];
+    FILE *pf = fopen(RECORDS, "a+");
+
+    system("clear");
+
+    int index = 0;
+    while (getAccountFromFile(pf, userName, &r))
+    {   
+        strcpy(r.name, userName);
+
+        if(strcmp(userName, u.name) == 0 &&
+            r.accountNbr == accountNum){
+            if(choice == 1){
+                printf("Enter the new phone number:");
+                scanf("%d", &r.phone);
+            }
+            else if(choice == 2){
+                printf("Enter the new country:");
+                scanf("%s", r.country);
+            }
+        }
+
+        arr[index] = r;
+        index++;
+    }
+
+    // clear the file
+    fclose(fopen(RECORDS, "w"));
+
+    for (int i = 0; i < index; i++){
+        saveRecordToFile(pf, arr[i]);
+    }
+
+    fclose(pf);
+    success(u);
 }

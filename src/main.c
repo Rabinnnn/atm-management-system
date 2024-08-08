@@ -3,6 +3,8 @@
 void mainMenu(struct User u)
 {
     int option;
+    int accountNum;
+    int choice;
     system("clear");
     printf("\n\n\t\t======= ATM =======\n\n");
     printf("\n\t\t-->> Feel free to choose one of the options below <<--\n");
@@ -24,7 +26,17 @@ void mainMenu(struct User u)
         break;
     case 2:
         // student TODO : add your **Update account information** function
-        // here
+        printf("Please enter the account number:");
+        scanf("%d", &accountNum);
+        if (!IsAccountNumContained(accountNum, u)){
+            system("clear");
+            printf("The account doesn't exist!");
+            mainMenu(u);
+        }
+        printf("\nWhich field would you like to change?\n1-> phone number\n2-> country\n");
+        scanf("%d", &choice);
+        updateAccountInfo(u, accountNum, choice);
+
         break;
     case 3:
         // student TODO : add your **Check the details of existing accounts** function
