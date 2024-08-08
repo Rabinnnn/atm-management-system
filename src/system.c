@@ -147,6 +147,11 @@ void createNewAcc(struct User u)
         printf("Error opening file.\n");
         return;
     }
+  /*  FILE *pg = fopen(USERS, "r");
+    if (pg == NULL) {
+        printf("Error opening file.\n");
+        return;
+    } */
     int ind = 0;
   
 noAccount:
@@ -167,6 +172,7 @@ date:
 accountNo:
     printf("\nEnter the account number:");
     scanf("%d", &r.accountNbr);
+
     if (r.accountNbr <= 0)
     {
         printf("Invalid account number. Use only positive numbers!\n");
@@ -179,8 +185,15 @@ accountNo:
         if (strcmp(userName, u.name) == 0 && cr.accountNbr == r.accountNbr)
         {
             printf("\n This Account already exists for this user\n\n");
-            goto noAccount;
+            sleep(2);
+            goto accountNo;
+        }else if (cr.accountNbr == r.accountNbr)
+        {
+            printf("\n This Account number is already taken\n\n");
+            sleep(2);
+            goto accountNo;
         }
+
         ind++;
     }
     r.id = ind;
@@ -221,44 +234,7 @@ accType:
     success(u);
 }
 
-// void signUp(struct User u)
-// {
-//     struct User r;
-//     struct User cr;
-//     char userName[50];
 
-//         FILE *pg = fopen(USER, "a+");
-//           if (pg == NULL) {
-//              printf("Error opening file.\n");
-//              return;
-//           }
-//     noUser:
-//     system("clear");
-//     printf("\t\t\t===== Sign Up =====\n");
-
-//     printf("\nEnter username:");
-//     scanf("%49s", u.name);
-//     // while (getAccountFromUser(pg, userName, &cr) != EOF)
-//     // {
-       
-//     //     if (strcmp(userName, u.name) == 0)
-//     //     {
-//     //             printf(" This name has already been taken!\n\n");
-//     //             sleep(2);  // Sleep for 2 seconds
-//     //             goto noUser;     
-           
-//     //     }
-       
-//     // } 
-    
-//     printf("\nEnter password:");
-//     scanf("%49s", u.password);
-
-//     saveAccountToLoginFile(pg, u, r);
-//     fclose(pg);
-//     success(u);
-
-// }
 
 void checkAllAccounts(struct User u)
 {

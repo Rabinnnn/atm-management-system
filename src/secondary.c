@@ -20,7 +20,7 @@ bool isAccountPresent(int num, struct User u){
         &r.deposit.year, r.country,
         &r.phone, &r.amount, r.accountType) != EOF){
         
-        if(num == r.accountNbr && strcmp(r.name, u.name) == 0){
+        if((num == r.accountNbr && strcmp(r.name, u.name) == 0) || (num == r.accountNbr)){
             return true;
         }
     }
