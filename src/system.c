@@ -81,7 +81,7 @@ void stayOrReturn(int notGood, void f(struct User u), struct User u)
     if (notGood == 0)
     {
         system("clear");
-        printf("\n✖ Record not found!!\n");
+        printf("\n Record not found!!\n");
     invalid:
         printf("\nEnter 0 to try again, 1 to return to main menu and 2 to exit:");
         scanf("%d", &option);
@@ -163,25 +163,7 @@ date:
         goto date;
     }
     
-   /* printf("\nEnter username:");
-    scanf("%49s", u.name);
 
-    while (getAccountFromFile(pf, userName, &cr) != EOF)
-    {
-        // printf("file:%s\n", u.name);
-        // printf("user:%s\n", userName);
-   
-        if (strcmp(userName, u.name) == 0)
-        {       
-                printf("✖ This name has already been taken!\n\n");
-                sleep(3);  // Sleep for 2 seconds
-                goto noAccount;      
-        }
-      
-      
-    } */
-    // printf("\nEnter password:");
-    // scanf("%49s", u.password);
 accountNo:
     printf("\nEnter the account number:");
     scanf("%d", &r.accountNbr);
@@ -196,7 +178,7 @@ accountNo:
     {
         if (strcmp(userName, u.name) == 0 && cr.accountNbr == r.accountNbr)
         {
-            printf("\n✖ This Account already exists for this user\n\n");
+            printf("\n This Account already exists for this user\n\n");
             goto noAccount;
         }
         ind++;
@@ -261,7 +243,7 @@ accType:
        
 //     //     if (strcmp(userName, u.name) == 0)
 //     //     {
-//     //             printf("✖ This name has already been taken!\n\n");
+//     //             printf(" This name has already been taken!\n\n");
 //     //             sleep(2);  // Sleep for 2 seconds
 //     //             goto noUser;     
            
@@ -420,4 +402,83 @@ void checkDetailOfAccount(struct User u, int accountNum){
         }
     }
 
+}
+
+void makeTransaction(struct User u, int accountNum, int choice){
+    char userName[100];
+    struct Record r;
+    struct Record arr[100];
+    FILE *pf = fopen(RECORDS, "a+");
+
+    int index = 0;
+    double available = 0;
+    double input = 0;
+    while (getAccountFromFile(pf, userName, &r))
+    {
+        strcpy(r.name, userName);
+
+        if(strcmp(userName, u.name) == 0 &&
+            r.accountNbr == accountNum){
+            if(strcmp(r.accountType, "fixed01") == 0 ||
+            strcmp(r.accountType, "fixed02") == 0 ||
+            strcmp(r.accountType, "fixed03") == 0){
+                system("clear");
+                printf(" Sorry! Transactions are not allowed on fixed accounts.");
+                mainMenu(u);
+            }
+
+            available = r.amount;
+
+            
+            if(choice == 1){
+                printf("Enter the amount you want to withdraw:");
+                scanf("%lf", &input);
+            }
+            else if(choice == 2){
+                printf("Enter the amount you want to deposit:");
+                scanf("%lf", &input);
+            }
+
+            if (input <= available && input > 0 && choice == 1){
+                r.amount -= input;
+            }
+            else if (choice == 1 && input > available){
+                system("clear");
+                printf(" Sorry! You don't have enough funds to withdraw %.2lf. Your account balance is %.2lf", input, available);
+                mainMenu(u);
+            }
+            else if(choice == 1 && input <= 0){
+                system("clear");
+                printf(" Please enter amount greater than 0.");
+                mainMenu(u);
+            }
+            else if (choice == 2 && input > 0 && input <= 999999){
+                r.amount += input;
+            }
+            else if(choice == 2 && input > 999999){
+                system("clear");
+                printf(" You cannot deposit more than $999,999.");
+                mainMenu(u);
+            }
+            else if (choice == 2 && input <= 0){
+                system("clear");
+                printf(" Please enter amount more than 0.");
+                mainMenu(u);
+            }
+        }
+
+        arr[index] = r;
+        index++;
+    }
+
+    // clear the file
+    fclose(fopen(RECORDS, "w"));
+
+    for (int i = 0; i < index; i++){
+        saveRecordToFile(pf, arr[i]);
+    }
+
+    system("clear");
+    fclose(pf);
+    success(u);
 }

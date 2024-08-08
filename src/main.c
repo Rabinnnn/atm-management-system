@@ -54,7 +54,17 @@ void mainMenu(struct User u)
         break;
     case 5:
         // student TODO : add your **Make transaction** function
-        // here
+        printf("Enter account number:");
+        scanf("%d", &accountNum);
+        if (!IsAccountNumContained(accountNum, u)){
+            system("clear");
+            printf("This account does not exist.");
+            mainMenu(u);
+        }
+        printf("Do you want to:\n        1-> Withdraw\n        2-> Deposit\n\n");
+        //printf("Enter your choice:");
+        scanf("%d", &choice);
+        makeTransaction(u, accountNum, choice);
         break;
     case 6:
         // student TODO : add your **Remove existing account** function

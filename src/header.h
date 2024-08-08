@@ -42,6 +42,7 @@ void mainMenu(struct User u);
 void checkDetailOfAccount(struct User u, int accountID);
 void checkAllAccounts(struct User u);
 void updateAccountInfo(struct User u, int accountNum, int commandNum);
+void makeTransaction(struct User u, int accountNum, int commandNum);
 
 //secondary funcs
 bool IsNameContained(char *name);

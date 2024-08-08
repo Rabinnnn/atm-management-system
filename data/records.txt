@@ -6,8 +6,7 @@
 
 3 2 rabin 777 3/4/2020 TZ 707954 54.00 savings
 
-
-4 2 rabin 888 4/8/2000 kenya 44949 1023.20 savings
+4 2 rabin 888 4/8/2000 kenya 44949 1123.20 savings
 
 5 2 rabin 333 4/8/2000 kenya 449444 1023.23 current
 
