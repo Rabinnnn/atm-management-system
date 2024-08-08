@@ -79,7 +79,14 @@ void mainMenu(struct User u)
         break;
     case 7:
         // student TODO : add your **Transfer owner** function
-        // here
+        printf("Enter the account number to be transferred:");
+        scanf("%d", &accountNum);
+        if (!IsAccountNumContained(accountNum, u)){
+            system("clear");
+            printf("The account does not exist.");
+            mainMenu(u);
+        }
+        transferAccount(u, accountNum);
         break;
     case 8:
         exit(1);

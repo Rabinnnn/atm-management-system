@@ -530,3 +530,66 @@ void removeAccount(struct  User u, int accountNum){
     fclose(pf);
     success(u);
 }
+
+void transferAccount(struct User u, int accountNum){
+    char userName[100];
+    char newOwnerName[100];
+    struct Record r;
+    struct Record arr[100];
+    FILE *pf = fopen(RECORDS, "a+");
+
+    int index = 0;
+    while (getAccountFromFile(pf, userName, &r))
+    {
+        strcpy(r.name, userName);
+        if (strcmp(userName, u.name) == 0 &&
+            r.accountNbr == accountNum)
+        {
+            system("clear");
+            printf("                       ===== Transfering account:\n");
+            printf("\nAccount number:%d\nDeposit Date:%d/%d/%d \ncountry:%s \nPhone number:%d \nAmount deposited: $%.2f \nType Of Account:%s\n",
+                    r.accountNbr,
+                    r.deposit.day,
+                    r.deposit.month,
+                    r.deposit.year,
+                    r.country,
+                    r.phone,
+                    r.amount,
+                    r.accountType);
+        }
+
+        arr[index] = r;
+        index++;
+    }
+    
+    fclose(pf);
+
+    printf("Enter the name of the person you wish to transfer to:");
+    scanf("%s", newOwnerName);
+    if(!IsNameContained(newOwnerName)){
+        printf("The user does not exist.");
+        mainMenu(u);
+    }
+    int newOwnerId;
+    newOwnerId = getUserId(newOwnerName);
+
+    for(int i = 0; i < index; i++){
+        if(strcmp(arr[i].name, u.name) == 0 &&
+            arr[i].accountNbr == accountNum){
+            strcpy(arr[i].name, newOwnerName);
+            arr[i].userId = newOwnerId;
+        }
+    }
+    
+    // clear the file
+    fclose(fopen(RECORDS, "w"));
+    
+    pf = fopen(RECORDS, "a+");
+    for (int i = 0; i < index; i++){
+        saveRecordToFile(pf, arr[i]);
+    }
+
+    fclose(pf);
+    success(u);
+    
+}
