@@ -5,10 +5,6 @@ const char *RECORDS = "./data/records.txt";
 const char *USER = "./data/users.txt";
 
 
-// int getAccountFromFile(FILE *ptr, char name[50], struct Record *r) {
-//     return fscanf(ptr, "%s %d", name, &r->accountNbr) == 2;
-// }
-
 int getAccountFromFile(FILE *ptr, char name[50], struct Record *r)
 {
     return fscanf(ptr, "%d %d %s %d %d/%d/%d %s %d %lf %s",
@@ -29,11 +25,10 @@ int getAccountFromFile(FILE *ptr, char name[50], struct Record *r)
 
 int getAccountFromUser(FILE *ptr, char name[50], struct User *r)
 {
-/*int ret =*/return  fscanf(ptr, "%d %s",
+return  fscanf(ptr, "%d %s",
                   &r->id,
 		          name);
-              //  printf("RET: %d\n", ret);
-              //  return ret;
+            
 }
 
 void saveAccountToFile(FILE *ptr, struct User u, struct Record r)
@@ -147,11 +142,7 @@ void createNewAcc(struct User u)
         printf("Error opening file.\n");
         return;
     }
-  /*  FILE *pg = fopen(USERS, "r");
-    if (pg == NULL) {
-        printf("Error opening file.\n");
-        return;
-    } */
+ 
     int ind = 0;
   
 noAccount:
@@ -197,6 +188,7 @@ accountNo:
         ind++;
     }
     r.id = ind;
+    u.id = getUserId(u.name);
     printf("\nEnter the country:");
     scanf("%s", r.country);
 phone:
@@ -228,7 +220,6 @@ accType:
         goto accType;
     }
 
-   // saveAccountToAccountFile(pf, u, r);
     saveAccountToFile(pf, u, r);
     fclose(pf);
     success(u);
