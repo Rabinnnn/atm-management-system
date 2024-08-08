@@ -566,7 +566,7 @@ void transferAccount(struct User u, int accountNum){
 
     printf("Enter the name of the person you wish to transfer to:");
     scanf("%s", newOwnerName);
-    if(!IsNameContained(newOwnerName)){
+    if(!isNamePresent(newOwnerName)){
         printf("The user does not exist.");
         mainMenu(u);
     }

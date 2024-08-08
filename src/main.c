@@ -28,7 +28,7 @@ void mainMenu(struct User u)
         // student TODO : add your **Update account information** function
         printf("Please enter the account number:");
         scanf("%d", &accountNum);
-        if (!IsAccountNumContained(accountNum, u)){
+        if (!isAccountPresent(accountNum, u)){
             system("clear");
             printf("This account does not exist!");
             mainMenu(u);
@@ -42,7 +42,7 @@ void mainMenu(struct User u)
         // student TODO : add your **Check the details of existing accounts** function
         printf("Enter account number:");
         scanf("%d", &accountNum);
-        if (!IsAccountNumContained(accountNum, u)){
+        if (!isAccountPresent(accountNum, u)){
             system("clear");
             printf("This account does not exist.");
             mainMenu(u);
@@ -56,7 +56,7 @@ void mainMenu(struct User u)
         // student TODO : add your **Make transaction** function
         printf("Enter account number:");
         scanf("%d", &accountNum);
-        if (!IsAccountNumContained(accountNum, u)){
+        if (!isAccountPresent(accountNum, u)){
             system("clear");
             printf("This account does not exist.");
             mainMenu(u);
@@ -70,7 +70,7 @@ void mainMenu(struct User u)
         // student TODO : add your **Remove existing account** function
         printf("Enter account number to be deleted:");
         scanf("%d", &accountNum);
-        if (!IsAccountNumContained(accountNum, u)){
+        if (!isAccountPresent(accountNum, u)){
             system("clear");
             printf("The account does not exist.");
             mainMenu(u);
@@ -81,7 +81,7 @@ void mainMenu(struct User u)
         // student TODO : add your **Transfer owner** function
         printf("Enter the account number to be transferred:");
         scanf("%d", &accountNum);
-        if (!IsAccountNumContained(accountNum, u)){
+        if (!isAccountPresent(accountNum, u)){
             system("clear");
             printf("The account does not exist.");
             mainMenu(u);

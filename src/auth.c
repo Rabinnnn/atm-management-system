@@ -54,7 +54,7 @@ void signUpMenu(char a[50], char pass[50]){
         fprintf(fp, "\n");
     }
 
-    if(isContain(names, a)){
+    if(isPresent(names, a)){
         printf("This name has already been taken!\n");
         exit(1);
     }

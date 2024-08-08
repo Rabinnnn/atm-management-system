@@ -37,19 +37,21 @@ void signUpMenu(char a[50], char pass[50]);
 const char *getPassword(struct User *u);
 
 // system functions
-void createNewAcc(struct User u);
 void mainMenu(struct User u);
+void createNewAcc(struct User u);
+void transferAccount(struct User u, int accountNum);
 void checkDetailOfAccount(struct User u, int accountID);
-void checkAllAccounts(struct User u);
 void updateAccountInfo(struct User u, int accountNum, int commandNum);
 void makeTransaction(struct User u, int accountNum, int commandNum);
-void transferAccount(struct User u, int accountNum);
 void removeAccount(struct  User u, int accountNum);
+void checkAllAccounts(struct User u);
+
+
 
 //secondary functions
-bool IsNameContained(char *name);
-bool isContain(char array[100][100], char* str);
+bool isNamePresent(char *name);
+bool isPresent(char array[100][100], char* str);
+bool isAccountPresent(int num, struct User u);
 int getUserId(char *name);
-bool usersChecker();
-bool recordsChecker();
-bool IsAccountNumContained(int num, struct User u);
+bool checkUsers();
+bool checkRecords();

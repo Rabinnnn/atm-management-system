@@ -1,6 +1,6 @@
 #include "header.h"
 
-bool isContain(char array[100][100], char* str){
+bool isPresent(char array[100][100], char* str){
     for (int i = 0; i < 100; i++){
         if (strcmp(array[i], str) == 0){
             return true;
@@ -10,7 +10,7 @@ bool isContain(char array[100][100], char* str){
     return false;
 }
 
-bool IsAccountNumContained(int num, struct User u){
+bool isAccountPresent(int num, struct User u){
     struct Record r;
     FILE *pf = fopen("./data/records.txt", "r+");
 
@@ -28,7 +28,7 @@ bool IsAccountNumContained(int num, struct User u){
     return false;
 }
 
-bool IsNameContained(char *name){
+bool isNamePresent(char *name){
     char id[5];
     char userName[100];
     char password[100];
@@ -42,7 +42,7 @@ bool IsNameContained(char *name){
     return false;
 }
 
-bool usersChecker(){
+bool checkUsers(){
     FILE* pf = fopen("./data/users.txt", "r+");
 
     char id[100];
@@ -74,7 +74,7 @@ bool usersChecker(){
 
 }
 
-bool recordsChecker(){
+bool checkRecords(){
     FILE *ptr = fopen("./data/records.txt", "r");
 
     char id[100];
@@ -107,7 +107,7 @@ bool recordsChecker(){
             printf("2");
             return false;
         }
-        else if (!IsNameContained(name)){
+        else if (!isNamePresent(name)){
             printf("3");
             return false;
         }
