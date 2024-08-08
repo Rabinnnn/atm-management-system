@@ -68,7 +68,14 @@ void mainMenu(struct User u)
         break;
     case 6:
         // student TODO : add your **Remove existing account** function
-        // here
+        printf("Enter account number to be deleted:");
+        scanf("%d", &accountNum);
+        if (!IsAccountNumContained(accountNum, u)){
+            system("clear");
+            printf("The account does not exist.");
+            mainMenu(u);
+        }
+        removeAccount(u, accountNum);
         break;
     case 7:
         // student TODO : add your **Transfer owner** function
