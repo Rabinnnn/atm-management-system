@@ -8,7 +8,7 @@ void signUpMenu(char a[50], char pass[50]){
     struct termios oflags, nflags;
 
     system("clear");
-    printf("\n\n\n\t\t\t\t   Bank Management System\n\t\t\t\t\t User Login:");
+    printf("\n\n\n\t\t\t\t   Bank Management System\n\t\t\t\t\t Enter Username:");
     scanf("%s", a);
 
     // disabling echo
@@ -22,7 +22,7 @@ void signUpMenu(char a[50], char pass[50]){
         perror("tcsetattr");
         return exit(1);
     }
-    printf("\n\n\n\n\n\t\t\t\tEnter the password to login:");
+    printf("\n\n\n\n\n\t\t\t\tEnter Password:");
     scanf("%s", pass);
 
     // restore terminal
@@ -54,7 +54,7 @@ void signUpMenu(char a[50], char pass[50]){
         fprintf(fp, "\n");
     }
 
-    if(isContain(names, a)){
+    if(isPresent(names, a)){
         printf("This name has already been taken!\n");
         exit(1);
     }

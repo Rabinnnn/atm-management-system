@@ -1,18 +1,8 @@
-0 0 Alice 0 10/10/2012 Africa 291321234 22432.52 saving
+0 0 rabin 999 4/5/2000 kenya -449014952 45.00 savings
 
-1 1 Michel 2 2/5/2001 Portugal 123543455 10023.230000 fixed01
+1 0 rabin 888 3/4/3000 kenya 8974854 55.00 current
 
-2 0 Michel 123 10/10/2020 UK 1234123 12345.30 saving
+0 0 rabin 777 3/4/2000 kenya 859594 23.00 savings
 
-
-3 2 rabin 777 3/4/2020 kenya 899888 54.00 saving
-
-
-3 2 rabin 555 4/3/2021 kenya 45533 33.00 saving
-
-
-4 2 rabin 4000 3/3/2000 kenya 73883 33.00 saving
-
-
-5 2 rabin 555 3/3/2000 kenya 75885 55.00 saving
+3 0 rabin 555 4/5/1998 kenya 399485 77.00 fixed01
 

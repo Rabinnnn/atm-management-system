@@ -34,19 +34,24 @@ struct User
 // authentication functions
 void loginMenu(char a[50], char pass[50]);
 void signUpMenu(char a[50], char pass[50]);
-//void registerMenu(char a[50], char pass[50]);
 const char *getPassword(struct User *u);
 
-// system function
-//void signUp(struct User u);
-void createNewAcc(struct User u);
+// system functions
 void mainMenu(struct User u);
+void createNewAcc(struct User u);
+void transferAccount(struct User u, int accountNum);
+void checkDetailOfAccount(struct User u, int accountID);
+void updateAccountInfo(struct User u, int accountNum, int commandNum);
+void makeTransaction(struct User u, int accountNum, int commandNum);
+void removeAccount(struct  User u, int accountNum);
 void checkAllAccounts(struct User u);
 
-//secondary funcs
-bool IsNameContained(char *name);
-bool isContain(char array[100][100], char* str);
+
+
+//secondary functions
+bool isNamePresent(char *name);
+bool isPresent(char array[100][100], char* str);
+bool isAccountPresent(int num, struct User u);
 int getUserId(char *name);
-bool usersChecker();
-bool recordsChecker();
-bool IsAccountNumContained(int num, struct User u);
+bool checkUsers();
+bool checkRecords();

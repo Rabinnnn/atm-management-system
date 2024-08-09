@@ -3,6 +3,8 @@
 void mainMenu(struct User u)
 {
     int option;
+    int accountNum;
+    int choice;
     system("clear");
     printf("\n\n\t\t======= ATM =======\n\n");
     printf("\n\t\t-->> Feel free to choose one of the options below <<--\n");
@@ -24,26 +26,67 @@ void mainMenu(struct User u)
         break;
     case 2:
         // student TODO : add your **Update account information** function
-        // here
+        printf("Please enter the account number:");
+        scanf("%d", &accountNum);
+        if (!isAccountPresent(accountNum, u)){
+            system("clear");
+            printf("This account does not exist!");
+            mainMenu(u);
+        }
+        printf("\nWhich field would you like to change?\n1-> phone number\n2-> country\n");
+        scanf("%d", &choice);
+        updateAccountInfo(u, accountNum, choice);
+
         break;
     case 3:
         // student TODO : add your **Check the details of existing accounts** function
-        // here
+        printf("Enter account number:");
+        scanf("%d", &accountNum);
+        if (!isAccountPresent(accountNum, u)){
+            system("clear");
+            printf("This account does not exist.");
+            mainMenu(u);
+        }
+        checkDetailOfAccount(u, accountNum);
         break;
     case 4:
         checkAllAccounts(u);
         break;
     case 5:
         // student TODO : add your **Make transaction** function
-        // here
+        printf("Enter account number:");
+        scanf("%d", &accountNum);
+        if (!isAccountPresent(accountNum, u)){
+            system("clear");
+            printf("This account does not exist.");
+            mainMenu(u);
+        }
+        printf("Do you want to:\n        1-> Withdraw\n        2-> Deposit\n\n");
+        //printf("Enter your choice:");
+        scanf("%d", &choice);
+        makeTransaction(u, accountNum, choice);
         break;
     case 6:
         // student TODO : add your **Remove existing account** function
-        // here
+        printf("Enter account number to be deleted:");
+        scanf("%d", &accountNum);
+        if (!isAccountPresent(accountNum, u)){
+            system("clear");
+            printf("The account does not exist.");
+            mainMenu(u);
+        }
+        removeAccount(u, accountNum);
         break;
     case 7:
         // student TODO : add your **Transfer owner** function
-        // here
+        printf("Enter the account number to be transferred:");
+        scanf("%d", &accountNum);
+        if (!isAccountPresent(accountNum, u)){
+            system("clear");
+            printf("The account does not exist.");
+            mainMenu(u);
+        }
+        transferAccount(u, accountNum);
         break;
     case 8:
         exit(1);
@@ -78,7 +121,7 @@ void initMenu(struct User *u)
             }
             else
             {
-                printf("\nWrong password!! or User Name\n");
+                printf("\nYou've entered wrong credentials!\n");
                 exit(1);
             }
             r = 1;
