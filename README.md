@@ -59,3 +59,6 @@ This file is used by the `make` build automation tool to manage the build proces
 
 * **[Rabin Otieno](https://github.com/Rabinnnn)**
 
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
