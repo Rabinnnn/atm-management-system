@@ -7,7 +7,7 @@ const char *USER = "./data/users.txt";
 
 int getAccountFromFile(FILE *ptr, char name[50], struct Record *r)
 {
-    return fscanf(ptr, "%d %d %s %d %d/%d/%d %s %d %lf %s",
+    return fscanf(ptr, "%d %d %s %lld %d/%d/%d %s %s %lf %s",
                   &r->id,
 		  &r->userId,
 		  name,
@@ -16,7 +16,7 @@ int getAccountFromFile(FILE *ptr, char name[50], struct Record *r)
                   &r->deposit.day,
                   &r->deposit.year,
                   r->country,
-                  &r->phone,
+                  r->phone,
                   &r->amount,
                   r->accountType) != EOF;
 }
@@ -30,10 +30,12 @@ return  fscanf(ptr, "%d %s",
 		          name);
             
 }
-
+//int ind = 0;
+ 
 void saveAccountToFile(FILE *ptr, struct User u, struct Record r)
 {
-    fprintf(ptr, "%d %d %s %d %d/%d/%d %s %d %.2lf %s\n\n",
+   //int ind = getRecordId(u.name);
+    fprintf(ptr, "%d %d %s %lld %d/%d/%d %s %s %.2lf %s\n\n",        
             r.id,
 	        u.id,
 	        u.name,
@@ -49,7 +51,7 @@ void saveAccountToFile(FILE *ptr, struct User u, struct Record r)
 
 void saveRecordToFile(FILE *ptr, struct Record r)
 {
-    fprintf(ptr, "%d %d %s %d %d/%d/%d %s %d %.2lf %s\n\n",
+    fprintf(ptr, "%d %d %s %lld %d/%d/%d %s %s %.2lf %s\n\n",
             r.id,
 	        r.userId,
 	        r.name,
@@ -155,21 +157,34 @@ date:
         r.deposit.day <= 0 || r.deposit.day > 31 ||
         r.deposit.year < 1900 || r.deposit.year > 3000){
         printf("Invalid date. Usage Example: 8/8/2024\n");
-         sleep(2);
-        goto date;
+        exit(1);
+         //TO DO
+        // sleep(2);
+       // goto date;
+        
+         
     }
     
 
 accountNo:
     printf("\nEnter the account number:");
-    scanf("%d", &r.accountNbr);
-
-    if (r.accountNbr <= 0)
-    {
-        printf("Invalid account number. Use only positive numbers!\n");
-         sleep(2);
+    char doen[10];
+    scanf("%10s", doen);
+   // printf("\ndoen:%s",doen);
+    if(!is_valid_number(doen) || strlen(doen) != 10){
+        printf("\nInvalid account number!");
         goto accountNo;
     }
+        r.accountNbr = strtoll(doen, NULL, 10);
+        //r.accountNbr = atoi(doen);
+    //printf("\ndoen2:%d",r.accountNbr);
+    
+   /*  if (r.accountNbr <= 0)
+    {
+        printf("Invalid account number! Use only positive numbers e.g 1, 2..\n");
+       //  sleep(1);
+        goto accountNo;
+    } */
   
      while (getAccountFromFile(pf, userName, &cr))
     {
@@ -185,27 +200,30 @@ accountNo:
             goto accountNo;
         }
 
-        ind++;
+      ind++;
     }
+   
     r.id = ind;
+   // r.id = getRecordId(r.name);
     u.id = getUserId(u.name);
     printf("\nEnter the country:");
     scanf("%s", r.country);
 phone:
     printf("\nEnter the phone number:");
-    scanf("%d", &r.phone);
-    if(r.phone == 0){
-        printf("Invalid phone number.\n");
-         sleep(2);
+    scanf("%s", r.phone);
+    if(!is_valid_number(r.phone) || strlen(r.phone) != 10){
+        printf("\nInvalid phone number:");
         goto phone;
     }
 amount:
     printf("\nEnter amount to deposit: $");
     scanf("%lf", &r.amount);
     if(r.amount <= 0 || r.amount > 999999){
-        printf("\nInvalid amount! You can only deposit in the range 1 - 999999\n");
-         sleep(2);
-        goto amount;
+        printf("\nInvalid amount! (min allowed:$1, max allowed: $999999)\n");
+        exit(1);
+       /* TO DO */
+       //  sleep(2);
+       // goto amount;
     }
 accType:
     printf("\nChoose the type of account:\n\t-> savings\n\t-> current\n\t-> fixed01(for 1 year)\n\t-> fixed02(for 2 years)\n\t-> fixed03(for 3 years)\n\n\tEnter your choice:");
@@ -220,6 +238,8 @@ accType:
         goto accType;
     }
 
+    //ind++; 
+   // r.id = ind;
     saveAccountToFile(pf, u, r);
     fclose(pf);
     success(u);
@@ -241,7 +261,7 @@ void checkAllAccounts(struct User u)
         if (strcmp(userName, u.name) == 0)
         {
             printf("_____________________\n");
-            printf("\nOwner:%s\nAccount number:%d\nDeposit Date:%d/%d/%d \ncountry:%s \nPhone number:%d \nAmount deposited: $%.2f \nType Of Account:%s\n",
+            printf("\nOwner:%s\nAccount number:%lld\nDeposit Date:%d/%d/%d \ncountry:%s \nPhone number:%s \nAmount deposited: $%.2f \nType Of Account:%s\n",
                    userName,
                    r.accountNbr,
                    r.deposit.day,
@@ -257,6 +277,20 @@ void checkAllAccounts(struct User u)
     success(u);
 }
 
+/*int getRecordId(char *name){
+    FILE *pg = fopen("./data/records.txt", "r+");
+
+    char id[5];
+    struct Record temp;
+    while(fscanf(pg, "%s %s\n\n", id, temp.name) != EOF){
+        if(strcmp(temp.name, name) == 0){
+           return atoi(id);
+          
+        }
+    }
+
+    return -1;
+} */
 
 int getUserId(char *name){
     FILE *pf = fopen("./data/users.txt", "r+");
@@ -272,7 +306,7 @@ int getUserId(char *name){
     return -1;
 }
 
-void updateAccountInfo(struct User u, int accountNum, int choice){
+void updateAccountInfo(struct User u, long long int accountNum, int choice){
     char userName[100];
     struct Record r;
     struct Record arr[100];
@@ -289,7 +323,7 @@ void updateAccountInfo(struct User u, int accountNum, int choice){
             r.accountNbr == accountNum){
             if(choice == 1){
                 printf("Enter the new phone number:");
-                scanf("%d", &r.phone);
+                scanf("%s", r.phone);
             }
             else if(choice == 2){
                 printf("Enter the new country:");
@@ -312,7 +346,7 @@ void updateAccountInfo(struct User u, int accountNum, int choice){
     success(u);
 }
 
-void checkDetailOfAccount(struct User u, int accountNum){
+void checkDetailOfAccount(struct User u, long long int accountNum){
     char userName[100];
     struct Record r;
     FILE *pf = fopen(RECORDS, "r");
@@ -323,7 +357,7 @@ void checkDetailOfAccount(struct User u, int accountNum){
         if (strcmp(userName, u.name) == 0 &&
             r.accountNbr == accountNum)
         {
-            printf("\nOwner:%s\nAccount number:%d\nDeposit Date:%d/%d/%d \ncountry:%s \nPhone number:%d \nAmount deposited: $%.2f \nType Of Account:%s\n",
+            printf("\nOwner:%s\nAccount number:%lld\nDeposit Date:%d/%d/%d \ncountry:%s \nPhone number:%s \nAmount deposited: $%.2f \nType Of Account:%s\n",
                     userName,
                     r.accountNbr,
                     r.deposit.day,
@@ -372,7 +406,7 @@ void checkDetailOfAccount(struct User u, int accountNum){
 
 }
 
-void makeTransaction(struct User u, int accountNum, int choice){
+void makeTransaction(struct User u, long long int accountNum, int choice){
     char userName[100];
     struct Record r;
     struct Record arr[100];
@@ -405,6 +439,9 @@ void makeTransaction(struct User u, int accountNum, int choice){
             else if(choice == 2){
                 printf("Enter the amount you want to deposit:");
                 scanf("%lf", &input);
+            }else{
+                printf("Invalid choice! Try again.");
+                mainMenu(u);
             }
 
             if (input <= available && input > 0 && choice == 1){
@@ -451,7 +488,7 @@ void makeTransaction(struct User u, int accountNum, int choice){
     success(u);
 }
 
-void removeAccount(struct  User u, int accountNum){
+void removeAccount(struct  User u, long long int accountNum){
     char userName[100];
     struct Record r;
     struct Record deleted;
@@ -476,7 +513,7 @@ void removeAccount(struct  User u, int accountNum){
 
     system("clear");
     printf("                       ===== Deleted account =====\n");
-    printf("\nOwner:%s\nAccount number:%d\nDeposit Date:%d/%d/%d \ncountry:%s \nPhone number:%d \nAmount deposited: $%.2f \nType Of Account:%s\n",
+    printf("\nOwner:%s\nAccount number:%lld\nDeposit Date:%d/%d/%d \ncountry:%s \nPhone number:%s \nAmount deposited: $%.2f \nType Of Account:%s\n",
         deleted.name,
         deleted.accountNbr,
         deleted.deposit.day,
@@ -498,7 +535,7 @@ void removeAccount(struct  User u, int accountNum){
     success(u);
 }
 
-void transferAccount(struct User u, int accountNum){
+void transferAccount(struct User u, long long int accountNum){
     char userName[100];
     char newOwnerName[100];
     struct Record r;
@@ -514,7 +551,7 @@ void transferAccount(struct User u, int accountNum){
         {
             system("clear");
             printf("                       ===== Transfering account:\n");
-            printf("\nAccount number:%d\nDeposit Date:%d/%d/%d \ncountry:%s \nPhone number:%d \nAmount deposited: $%.2f \nType Of Account:%s\n",
+            printf("\nAccount number:%lld\nDeposit Date:%d/%d/%d \ncountry:%s \nPhone number:%s \nAmount deposited: $%.2f \nType Of Account:%s\n",
                     r.accountNbr,
                     r.deposit.day,
                     r.deposit.month,

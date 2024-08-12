@@ -1,9 +1,10 @@
 #include "header.h"
+#include <unistd.h>
 
 void mainMenu(struct User u)
 {
     int option;
-    int accountNum;
+    long long int accountNum;
     int choice;
     system("clear");
     printf("\n\n\t\t======= ATM =======\n\n");
@@ -11,7 +12,7 @@ void mainMenu(struct User u)
     printf("\n\t\t[1]- Create a new account\n");
     printf("\n\t\t[2]- Update account information\n");
     printf("\n\t\t[3]- Check accounts\n");
-    printf("\n\t\t[4]- Check list of owned account\n");
+    printf("\n\t\t[4]- Check list of all owned account\n");
     printf("\n\t\t[5]- Make Transaction\n");
     printf("\n\t\t[6]- Remove existing account\n");
     printf("\n\t\t[7]- Transfer ownership\n");
@@ -24,13 +25,15 @@ void mainMenu(struct User u)
         createNewAcc(u);
         
         break;
+  
     case 2:
         // student TODO : add your **Update account information** function
         printf("Please enter the account number:");
-        scanf("%d", &accountNum);
+        scanf("%lld", &accountNum);
         if (!isAccountPresent(accountNum, u)){
             system("clear");
             printf("This account does not exist!");
+            sleep(2);
             mainMenu(u);
         }
         printf("\nWhich field would you like to change?\n1-> phone number\n2-> country\n");
@@ -41,7 +44,7 @@ void mainMenu(struct User u)
     case 3:
         // student TODO : add your **Check the details of existing accounts** function
         printf("Enter account number:");
-        scanf("%d", &accountNum);
+        scanf("%lld", &accountNum);
         if (!isAccountPresent(accountNum, u)){
             system("clear");
             printf("This account does not exist.");
@@ -55,7 +58,7 @@ void mainMenu(struct User u)
     case 5:
         // student TODO : add your **Make transaction** function
         printf("Enter account number:");
-        scanf("%d", &accountNum);
+        scanf("%lld", &accountNum);
         if (!isAccountPresent(accountNum, u)){
             system("clear");
             printf("This account does not exist.");
@@ -69,7 +72,7 @@ void mainMenu(struct User u)
     case 6:
         // student TODO : add your **Remove existing account** function
         printf("Enter account number to be deleted:");
-        scanf("%d", &accountNum);
+        scanf("%lld", &accountNum);
         if (!isAccountPresent(accountNum, u)){
             system("clear");
             printf("The account does not exist.");
@@ -80,7 +83,7 @@ void mainMenu(struct User u)
     case 7:
         // student TODO : add your **Transfer owner** function
         printf("Enter the account number to be transferred:");
-        scanf("%d", &accountNum);
+        scanf("%lld", &accountNum);
         if (!isAccountPresent(accountNum, u)){
             system("clear");
             printf("The account does not exist.");
@@ -92,7 +95,10 @@ void mainMenu(struct User u)
         exit(1);
         break;
     default:
-        printf("Invalid operation!\n");
+        printf("Invalid operation! Please choose one of the listed options.\n");
+        sleep(2);
+        mainMenu(u);
+       // exit(1);
     }
 };
 
@@ -100,7 +106,9 @@ void initMenu(struct User *u)
 {
     int r = 0;
     int option;
+   
     system("clear");
+    
     printf("\n\n\t\t======= ATM =======\n");
     printf("\n\t\t-->> Feel free to login / register :\n");
    // printf("\n\t\t[1]- sign up\n");
@@ -117,12 +125,14 @@ void initMenu(struct User *u)
             loginMenu(u->name, u->password);
             if (strcmp(u->password, getPassword(u)) == 0)
             {
-                printf("\n\nPassword Match!");
+                printf("\n\nLogin successful.");
             }
             else
             {
-                printf("\nYou've entered wrong credentials!\n");
-                exit(1);
+                printf("\nYou've entered wrong credentials! Try again\n");
+                sleep(2);
+                initMenu(u);
+               // exit(1);
             }
             r = 1;
             break;
@@ -135,7 +145,10 @@ void initMenu(struct User *u)
             exit(1);
             break;
         default:
-            printf("Insert a valid operation!\n");
+            printf("Please insert a valid operation!\n");
+            sleep(2);
+            initMenu(u);
+           // exit(1);
         }
     }
 };

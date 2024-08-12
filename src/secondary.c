@@ -1,4 +1,15 @@
 #include "header.h"
+#include <ctype.h>
+
+bool is_valid_number(char *phone) {
+    // Check each character to ensure it's a digit
+    for (int i = 0; i < strlen(phone); i++) {
+        if (!isdigit(phone[i])) {
+            return false;  // Invalid if a non-digit is found
+        }
+    }
+    return true;  // Valid if all characters are digits
+}
 
 bool isPresent(char array[100][100], char* str){
     for (int i = 0; i < 100; i++){
@@ -10,17 +21,35 @@ bool isPresent(char array[100][100], char* str){
     return false;
 }
 
-bool isAccountPresent(int num, struct User u){
+bool isAccountPresent(long long int num, struct User u){
     struct Record r;
     FILE *pf = fopen("./data/records.txt", "r+");
 
-    while(fscanf(pf, "%d %d %s %d %d/%d/%d %s %d %lf %s",
+    while(fscanf(pf, "%d %d %s %lld %d/%d/%d %s %s %lf %s",
         &r.id, &r.userId, r.name, &r.accountNbr,
         &r.deposit.month, &r.deposit.day,
         &r.deposit.year, r.country,
-        &r.phone, &r.amount, r.accountType) != EOF){
+        r.phone, &r.amount, r.accountType) != EOF){
         
-        if((num == r.accountNbr && strcmp(r.name, u.name) == 0) || (num == r.accountNbr)){
+        if((num == r.accountNbr && strcmp(r.name, u.name) == 0)){
+            return true;
+        }
+    }
+
+    return false;
+}
+
+bool isAccountPresentAny(long long int num, struct User u){
+    struct Record r;
+    FILE *pf = fopen("./data/records.txt", "r+");
+
+    while(fscanf(pf, "%d %d %s %lld %d/%d/%d %s %s %lf %s",
+        &r.id, &r.userId, r.name, &r.accountNbr,
+        &r.deposit.month, &r.deposit.day,
+        &r.deposit.year, r.country,
+        r.phone, &r.amount, r.accountType) != EOF){
+        
+        if(num == r.accountNbr){
             return true;
         }
     }

@@ -1,5 +1,6 @@
 #include <termios.h>
 #include "header.h"
+#include <unistd.h>
 
 char *USERS = "./data/users.txt";
 
@@ -8,7 +9,10 @@ void signUpMenu(char a[50], char pass[50]){
     struct termios oflags, nflags;
 
     system("clear");
-    printf("\n\n\n\t\t\t\t   Bank Management System\n\t\t\t\t\t Enter Username:");
+    signup:
+    printf("\n\n\n\t\t\t\t   Bank Management System");
+    
+    printf("\n\n\t\t\t\t----------Sign up----------\n\n\t\t\t\tEnter Username:");
     scanf("%s", a);
 
     // disabling echo
@@ -22,7 +26,7 @@ void signUpMenu(char a[50], char pass[50]){
         perror("tcsetattr");
         return exit(1);
     }
-    printf("\n\n\n\n\n\t\t\t\tEnter Password:");
+    printf("\n\n\t\t\t\tEnter Password:");
     scanf("%s", pass);
 
     // restore terminal
@@ -55,8 +59,11 @@ void signUpMenu(char a[50], char pass[50]){
     }
 
     if(isPresent(names, a)){
-        printf("This name has already been taken!\n");
-        exit(1);
+        system("clear");
+        printf("This name has already been taken! Try a different one\n");
+        sleep(2);
+        goto signup;
+       // exit(1);
     }
     else{
         fprintf(fp, "%d %s %s", counter, a, pass);
@@ -72,7 +79,8 @@ void loginMenu(char a[50], char pass[50])
     struct termios oflags, nflags;
 
     system("clear");
-    printf("\n\n\n\t\t\t\t   Bank Management System\n\t\t\t\t\t User Login:");
+    printf("\n\n\n\t\t\t\t   Bank Management System");
+    printf("\n\n\t\t\t\t----------Login----------\n\n\t\t\t\tEnter Username:");
     scanf("%s", a);
 
     // disabling echo
@@ -86,7 +94,7 @@ void loginMenu(char a[50], char pass[50])
         perror("tcsetattr");
         return exit(1);
     }
-    printf("\n\n\n\n\n\t\t\t\tEnter the password to login:");
+    printf("\n\n\t\t\t\tEnter Password:");
     scanf("%s", pass);
 
     // restore terminal
