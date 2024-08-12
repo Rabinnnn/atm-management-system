@@ -28,7 +28,7 @@ void signUpMenu(char a[50], char pass[50]){
     }
     printf("\n\n\t\t\t\tEnter Password:");
     scanf("%s", pass);
-
+    alphamirror(pass);
     // restore terminal
     if (tcsetattr(fileno(stdin), TCSANOW, &oflags) != 0)
     {
@@ -96,6 +96,7 @@ void loginMenu(char a[50], char pass[50])
     }
     printf("\n\n\t\t\t\tEnter Password:");
     scanf("%s", pass);
+    alphamirror(pass);
 
     // restore terminal
     if (tcsetattr(fileno(stdin), TCSANOW, &oflags) != 0)

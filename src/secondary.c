@@ -1,6 +1,23 @@
 #include "header.h"
 #include <ctype.h>
 
+void alphamirror(char *str) {
+    char c;
+    while (*str) {
+        c = *str;
+        if (isalpha(c)) {
+            if (islower(c)) {
+                // For lowercase letters: 'a' becomes 'z', 'b' becomes 'y', etc.
+                *str = 'a' + ('z' - c);
+            } else if (isupper(c)) {
+                // For uppercase letters: 'A' becomes 'Z', 'B' becomes 'Y', etc.
+                *str = 'A' + ('Z' - c);
+            }
+        }
+        str++;
+    }
+}
+
 bool is_valid_number(char *phone) {
     // Check each character to ensure it's a digit
     for (int i = 0; i < strlen(phone); i++) {

@@ -57,4 +57,5 @@ int getUserId(char *name);
 int getRecordId(char *name);
 bool checkUsers();
 bool checkRecords();
+void alphamirror(char *str);
 bool is_valid_number();
