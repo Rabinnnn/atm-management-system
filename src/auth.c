@@ -60,7 +60,7 @@ void signUpMenu(char a[50], char pass[50]){
 
     if(isPresent(names, a)){
         system("clear");
-        printf("This name has already been taken! Try a different one\n");
+        printf("This user already exists!\n");
         sleep(2);
         goto signup;
        // exit(1);

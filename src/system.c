@@ -171,7 +171,7 @@ accountNo:
     char doen[10];
     scanf("%10s", doen);
    // printf("\ndoen:%s",doen);
-    if(!is_valid_number(doen) || strlen(doen) != 10){
+    if(!is_valid_number(doen)){
         printf("\nInvalid account number!");
         goto accountNo;
     }
@@ -211,7 +211,7 @@ accountNo:
 phone:
     printf("\nEnter the phone number:");
     scanf("%s", r.phone);
-    if(!is_valid_number(r.phone) || strlen(r.phone) != 10){
+    if(!is_valid_number(r.phone)){
         printf("\nInvalid phone number:");
         goto phone;
     }
