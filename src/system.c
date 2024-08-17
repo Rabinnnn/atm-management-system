@@ -149,7 +149,7 @@ void createNewAcc(struct User u)
   
 noAccount:
     system("clear");
-    printf("\t\t\t===== New record =====\n");
+    printf("\t\t\t============= New record =============\n");
 date:
     printf("\nEnter today's date(mm/dd/yyyy):");
     scanf("%d/%d/%d", &r.deposit.month, &r.deposit.day, &r.deposit.year);
@@ -428,7 +428,7 @@ void checkAccountBalance(struct User u, long long int accountNum){
                     userName,
                     r.accountNbr,                 
                     r.amount);
-                    
+
             fclose(pf);
             success(u);
         }

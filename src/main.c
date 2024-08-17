@@ -7,7 +7,7 @@ void mainMenu(struct User u)
     long long int accountNum;
     int choice;
     system("clear");
-    printf("\n\n\t\t======= ATM =======\n\n");
+    printf("\n\n\t\t======= ATM MANAGEMENT SYSTEM =======\n\n");
     printf("\n\t\t-->> Feel free to choose one of the options below <<--\n");
     printf("\n\t\t[1]- Create a new account\n");
     printf("\n\t\t[2]- Update account information\n");
@@ -128,8 +128,8 @@ void initMenu(struct User *u)
    
     system("clear");
     
-    printf("\n\n\t\t======= ATM =======\n");
-    printf("\n\t\t-->> Feel free to login / register :\n");
+    printf("\n\n\t\t============= ATM MANAGEMENT SYSTEM =============\n");
+    printf("\n\t\t-->> Welcome! Feel free to login / register <<--\n");
    // printf("\n\t\t[1]- sign up\n");
     printf("\n\t\t[1]- login\n");
     printf("\n\t\t[2]- register\n");
