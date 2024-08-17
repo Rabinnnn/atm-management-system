@@ -45,6 +45,7 @@ void updateAccountInfo(struct User u, long long int accountNum, int choice);
 void makeTransaction(struct User u, long long int accountNum, int choice);
 void removeAccount(struct  User u, long long int accountNum);
 void checkAllAccounts(struct User u);
+void checkAccountBalance(struct User u, long long int accountID);
 
 
 

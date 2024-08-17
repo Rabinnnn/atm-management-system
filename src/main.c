@@ -16,7 +16,8 @@ void mainMenu(struct User u)
     printf("\n\t\t[5]- Make Transaction\n");
     printf("\n\t\t[6]- Remove existing account\n");
     printf("\n\t\t[7]- Transfer ownership\n");
-    printf("\n\t\t[8]- Exit\n");
+    printf("\n\t\t[8]- Check account balance\n");
+    printf("\n\t\t[9]- Exit\n");
     scanf("%d", &option);
 
     switch (option)
@@ -98,6 +99,18 @@ void mainMenu(struct User u)
         transferAccount(u, accountNum);
         break;
     case 8:
+        // student TODO : add your **Check the details of existing accounts** function
+        printf("Enter account number:");
+        scanf("%lld", &accountNum);
+        while (getchar() != '\n');
+        if (!isAccountPresent(accountNum, u)){
+            system("clear");
+            printf("This account does not exist.");
+            mainMenu(u);
+        }
+        checkAccountBalance(u, accountNum);
+        break;
+    case 9:
         exit(1);
         break;
     default:

@@ -412,6 +412,32 @@ void checkDetailOfAccount(struct User u, long long int accountNum){
 
 }
 
+
+void checkAccountBalance(struct User u, long long int accountNum){
+    char userName[100];
+    struct Record r;
+    FILE *pf = fopen(RECORDS, "r");
+
+    system("clear");
+    while (getAccountFromFile(pf, userName, &r))
+    {
+        if (strcmp(userName, u.name) == 0 &&
+            r.accountNbr == accountNum)
+        {
+            printf("\nOwner:%s\nAccount number:%lld\nAccount balance: $%.2f \n",
+                    userName,
+                    r.accountNbr,                 
+                    r.amount);
+                    
+            fclose(pf);
+            success(u);
+        }
+    }
+
+}
+
+
+
 void makeTransaction(struct User u, long long int accountNum, int choice){
     char userName[100];
     struct Record r;
