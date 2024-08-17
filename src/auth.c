@@ -15,10 +15,10 @@ void signUpMenu(char a[50], char pass[50]){
     scanf("%s", a);
      // Discard any remaining input after the first word (name)
     while (getchar() != '\n');
-    // disabling echo
+    
     tcgetattr(fileno(stdin), &oflags);
     nflags = oflags;
-    nflags.c_lflag &= ~ECHO;
+    nflags.c_lflag &= ECHO;
     nflags.c_lflag |= ECHONL;
 
     if (tcsetattr(fileno(stdin), TCSANOW, &nflags) != 0)
@@ -85,10 +85,10 @@ void loginMenu(char a[50], char pass[50])
     scanf("%s", a);
     while (getchar() != '\n');
 
-    // disabling echo
+    //disable echo
     tcgetattr(fileno(stdin), &oflags);
     nflags = oflags;
-    nflags.c_lflag |= ECHO;
+    nflags.c_lflag &= ~ECHO;
     nflags.c_lflag |= ECHONL;
 
     if (tcsetattr(fileno(stdin), TCSANOW, &nflags) != 0)
