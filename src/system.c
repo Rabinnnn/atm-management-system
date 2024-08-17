@@ -35,7 +35,7 @@ return  fscanf(ptr, "%d %s",
 void saveAccountToFile(FILE *ptr, struct User u, struct Record r)
 {
    //int ind = getRecordId(u.name);
-    fprintf(ptr, "%d %d %s %lld %d/%d/%d %s %s %.6lf %s\n\n",        
+    fprintf(ptr, "%d %d %s %lld %d/%d/%d %s %s %.2lf %s\n\n",        
             r.id,
 	        u.id,
 	        u.name,
@@ -51,7 +51,7 @@ void saveAccountToFile(FILE *ptr, struct User u, struct Record r)
 
 void saveRecordToFile(FILE *ptr, struct Record r)
 {
-    fprintf(ptr, "%d %d %s %lld %d/%d/%d %s %s %.6lf %s\n\n",
+    fprintf(ptr, "%d %d %s %lld %d/%d/%d %s %s %.2lf %s\n\n",
             r.id,
 	        r.userId,
 	        r.name,
@@ -455,7 +455,7 @@ void makeTransaction(struct User u, long long int accountNum, int choice){
             }
             else if (choice == 1 && input > available){
                 system("clear");
-                printf(" Sorry! You don't have enough funds to withdraw %.6lf. Your account balance is %.6lf", input, available);
+                printf(" Sorry! You don't have enough funds to withdraw %.2lf. Your account balance is %.2lf", input, available);
                 mainMenu(u);
             }
             else if(choice == 1 && input <= 0){
