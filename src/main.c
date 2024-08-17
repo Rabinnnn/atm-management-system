@@ -30,6 +30,7 @@ void mainMenu(struct User u)
         // student TODO : add your **Update account information** function
         printf("Please enter the account number:");
         scanf("%lld", &accountNum);
+        while (getchar() != '\n');
         if (!isAccountPresent(accountNum, u)){
             system("clear");
             printf("This account does not exist!");
@@ -38,6 +39,7 @@ void mainMenu(struct User u)
         }
         printf("\nWhich field would you like to change?\n1-> phone number\n2-> country\n");
         scanf("%d", &choice);
+        while (getchar() != '\n');
         updateAccountInfo(u, accountNum, choice);
 
         break;
@@ -45,6 +47,7 @@ void mainMenu(struct User u)
         // student TODO : add your **Check the details of existing accounts** function
         printf("Enter account number:");
         scanf("%lld", &accountNum);
+        while (getchar() != '\n');
         if (!isAccountPresent(accountNum, u)){
             system("clear");
             printf("This account does not exist.");
@@ -59,6 +62,7 @@ void mainMenu(struct User u)
         // student TODO : add your **Make transaction** function
         printf("Enter account number:");
         scanf("%lld", &accountNum);
+        while (getchar() != '\n');
         if (!isAccountPresent(accountNum, u)){
             system("clear");
             printf("This account does not exist.");
@@ -67,12 +71,14 @@ void mainMenu(struct User u)
         printf("Do you want to:\n        1-> Withdraw\n        2-> Deposit\n\n");
         //printf("Enter your choice:");
         scanf("%d", &choice);
+        while (getchar() != '\n');
         makeTransaction(u, accountNum, choice);
         break;
     case 6:
         // student TODO : add your **Remove existing account** function
         printf("Enter account number to be deleted:");
         scanf("%lld", &accountNum);
+        while (getchar() != '\n');
         if (!isAccountPresent(accountNum, u)){
             system("clear");
             printf("The account does not exist.");

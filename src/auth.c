@@ -12,9 +12,10 @@ void signUpMenu(char a[50], char pass[50]){
     signup:
     printf("\n\n\n\t\t\t\t   Bank Management System");
     
-    printf("\n\n\t\t\t\t----------Sign up----------\n\n\t\t\t\tEnter Username:");
+    printf("\n\n\t\t\t\t----------Sign up----------\n\n\t\t\t\tEnter Username (please enter only one name):");
     scanf("%s", a);
-
+     // Discard any remaining input after the first word (name)
+    while (getchar() != '\n');
     // disabling echo
     tcgetattr(fileno(stdin), &oflags);
     nflags = oflags;
@@ -26,8 +27,9 @@ void signUpMenu(char a[50], char pass[50]){
         perror("tcsetattr");
         return exit(1);
     }
-    printf("\n\n\t\t\t\tEnter Password:");
+    printf("\n\n\t\t\t\tEnter Password (No spaces allowed):");
     scanf("%s", pass);
+    while (getchar() != '\n');
     alphamirror(pass);
     // restore terminal
     if (tcsetattr(fileno(stdin), TCSANOW, &oflags) != 0)
