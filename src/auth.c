@@ -24,7 +24,7 @@ void signUpMenu(char a[50], char pass[50]){
     if (tcsetattr(fileno(stdin), TCSANOW, &nflags) != 0)
     {
         perror("tcsetattr");
-        return exit(1);
+        exit(1);
     }
     printf("\n\n\t\t\t\tEnter Password (No spaces allowed):");
     scanf("%s", pass);
@@ -34,7 +34,7 @@ void signUpMenu(char a[50], char pass[50]){
     if (tcsetattr(fileno(stdin), TCSANOW, &oflags) != 0)
     {
         perror("tcsetattr");
-        return exit(1);
+        exit(1);
     }
 
     FILE *fp;
@@ -94,7 +94,7 @@ void loginMenu(char a[50], char pass[50])
     if (tcsetattr(fileno(stdin), TCSANOW, &nflags) != 0)
     {
         perror("tcsetattr");
-        return exit(1);
+        exit(1);
     }
     printf("\n\n\t\t\t\tEnter Password:");
     scanf("%s", pass);
@@ -105,7 +105,7 @@ void loginMenu(char a[50], char pass[50])
     if (tcsetattr(fileno(stdin), TCSANOW, &oflags) != 0)
     {
         perror("tcsetattr");
-        return exit(1);
+        exit(1);
     }
 };
 
