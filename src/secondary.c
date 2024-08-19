@@ -26,6 +26,7 @@ bool is_valid_number(char *phone) {
             return false;  // Invalid if a non-digit is found
         }
     }
+    
     return true;  // Valid if all characters are digits
 }
 

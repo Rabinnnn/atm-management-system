@@ -195,12 +195,17 @@ phone:
         printf("\nInvalid phone number:");
         goto phone;
     }
+    if(strlen(r.phone) != 9){
+        printf("\nInvalid phone number!\n");
+        goto phone;
+       
+    }
 amount:
     printf("\nEnter amount to deposit: $");
     scanf("%lf", &r.amount);
     while (getchar() != '\n');
-    if(r.amount <= 0 || r.amount > 999999){
-        printf("\nInvalid amount! (min allowed:$1, max allowed: $999999)\n");
+    if(r.amount <= 0 || r.amount > 9999999999){
+        printf("\nInvalid amount! (min allowed:$1, max allowed: $9999999999)\n");
         exit(1);
        
     }
@@ -324,8 +329,8 @@ void checkDetailOfAccount(struct User u, long long int accountNum){
             printf("\nOwner:%s\nAccount number:%lld\nDeposit Date:%d/%d/%d \ncountry:%s \nPhone number:%s \nAmount deposited: $%.2f \nType Of Account:%s\n",
                     userName,
                     r.accountNbr,
-                    r.deposit.day,
                     r.deposit.month,
+                    r.deposit.day,
                     r.deposit.year,
                     r.country,
                     r.phone,
@@ -336,7 +341,7 @@ void checkDetailOfAccount(struct User u, long long int accountNum){
             if(strcmp(r.accountType, "savings") == 0){
                 rate = 0.07;
                 float interest = r.amount * (1 + rate / 12) - r.amount;
-                printf(" -> You will get $%.2f as interest on day 10 of every month\n", interest);
+                printf(" -> You will get $%.2f as interest on day %d of every month\n", interest, r.deposit.day);
             }
             else if(strcmp(r.accountType, "fixed01") == 0){
                 rate = 0.04;
@@ -447,12 +452,12 @@ void makeTransaction(struct User u, long long int accountNum, int choice){
                 printf(" Please enter amount greater than 0.");
                 mainMenu(u);
             }
-            else if (choice == 2 && input > 0 && input <= 999999){
+            else if (choice == 2 && input > 0 && input <= 9999999999){
                 r.amount += input;
             }
-            else if(choice == 2 && input > 999999){
+            else if(choice == 2 && input > 9999999999){
                 system("clear");
-                printf(" You cannot deposit more than $999,999.");
+                printf(" You cannot deposit more than $9,999,999,999.");
                 mainMenu(u);
             }
             else if (choice == 2 && input <= 0){
