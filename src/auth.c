@@ -12,30 +12,51 @@ void signUpMenu(char a[50], char pass[50]){
     signup:
     printf("\n\n\n\t\t\t\t  ============== REGISTER =============="); 
     printf("\n\n\t\t\t\tEnter Username (please enter only one name):");
-    scanf("%s", a);
-     // Discard any remaining input after the first word (name)
-    while (getchar() != '\n');
-    
-    tcgetattr(fileno(stdin), &oflags);
-    nflags = oflags;
-    nflags.c_lflag &= ECHO;
-    nflags.c_lflag |= ECHONL;
+    // Clear any leftover input in the buffer
+    clearInputBuffer();
 
-    if (tcsetattr(fileno(stdin), TCSANOW, &nflags) != 0)
-    {
-        perror("tcsetattr");
-        exit(1);
+    // Get the username
+    fgets(a, 50, stdin);
+
+    // Remove the newline character if it's read by fgets
+    if (a[strlen(a) - 1] == '\n') {
+        a[strlen(a) - 1] = '\0';  // Replace newline with null terminator
+    } else {
+        clearInputBuffer();  // Clear remaining input if user entered more than 49 characters
     }
+   
+    
+    // tcgetattr(fileno(stdin), &oflags);
+    // nflags = oflags;
+    //  nflags.c_lflag &= ECHO;
+    //  nflags.c_lflag |= ECHONL;
+
+
+    // if (tcsetattr(fileno(stdin), TCSANOW, &nflags) != 0)
+    // {
+    //     perror("tcsetattr");
+    //     exit(1);
+    // }
     printf("\n\n\t\t\t\tEnter Password (No spaces allowed):");
-    scanf("%s", pass);
-    while (getchar() != '\n');
-    alphamirror(pass);
-    // restore terminal
-    if (tcsetattr(fileno(stdin), TCSANOW, &oflags) != 0)
-    {
-        perror("tcsetattr");
-        exit(1);
+  //  scanf("%s", pass);
+   //clearInputBuffer();
+
+    // Get the username
+    fgets(pass, 50, stdin);
+
+    // Remove the newline character if it's read by fgets
+    if (pass[strlen(pass) - 1] == '\n') {
+        pass[strlen(pass) - 1] = '\0';  // Replace newline with null terminator
+    } else {
+        clearInputBuffer();  // Clear remaining input if user entered more than 49 characters
     }
+       alphamirror(pass);
+    // // restore terminal
+    // if (tcsetattr(fileno(stdin), TCSANOW, &oflags) != 0)
+    // {
+    //     perror("tcsetattr");
+    //     exit(1);
+    // }
 
     FILE *fp;
     char names[100][100]; 

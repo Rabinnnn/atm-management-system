@@ -1,6 +1,13 @@
 #include "header.h"
 #include <ctype.h>
 
+// clear input buffer
+void clearInputBuffer() {
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF) {
+    }
+}
+
 // password encryption
 void alphamirror(char *str) {
     char c;
@@ -26,7 +33,7 @@ bool is_valid_number(char *phone) {
             return false;  // Invalid if a non-digit is found
         }
     }
-    
+
     return true;  // Valid if all characters are digits
 }
 
