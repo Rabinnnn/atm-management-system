@@ -33,6 +33,7 @@ $  ./atm
 ```
 
 * After successfully running the program, follow the onscreen instructions to use the program.
+* **NOTE:** All inputs are taken as a single string. For instance, if you enter your name as John Doe only John will be used and Doe will be discarded.
 * If you want to do a full-rebuild use the following command:
 ```bash
 $  make clean

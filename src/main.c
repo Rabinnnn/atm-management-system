@@ -7,7 +7,7 @@ void mainMenu(struct User u)
     long long int accountNum;
     int choice;
     system("clear");
-    printf("\n\n\t\t======= ATM =======\n\n");
+    printf("\n\n\t\t======= ATM MANAGEMENT SYSTEM =======\n\n");
     printf("\n\t\t-->> Feel free to choose one of the options below <<--\n");
     printf("\n\t\t[1]- Create a new account\n");
     printf("\n\t\t[2]- Update account information\n");
@@ -16,7 +16,8 @@ void mainMenu(struct User u)
     printf("\n\t\t[5]- Make Transaction\n");
     printf("\n\t\t[6]- Remove existing account\n");
     printf("\n\t\t[7]- Transfer ownership\n");
-    printf("\n\t\t[8]- Exit\n");
+    printf("\n\t\t[8]- Check account balance\n");
+    printf("\n\t\t[9]- Exit\n");
     scanf("%d", &option);
 
     switch (option)
@@ -27,9 +28,10 @@ void mainMenu(struct User u)
         break;
   
     case 2:
-        // student TODO : add your **Update account information** function
+        // Update account information function
         printf("Please enter the account number:");
         scanf("%lld", &accountNum);
+        while (getchar() != '\n');
         if (!isAccountPresent(accountNum, u)){
             system("clear");
             printf("This account does not exist!");
@@ -38,13 +40,15 @@ void mainMenu(struct User u)
         }
         printf("\nWhich field would you like to change?\n1-> phone number\n2-> country\n");
         scanf("%d", &choice);
+        while (getchar() != '\n');
         updateAccountInfo(u, accountNum, choice);
 
         break;
     case 3:
-        // student TODO : add your **Check the details of existing accounts** function
+        // Check the details of existing accounts function
         printf("Enter account number:");
         scanf("%lld", &accountNum);
+        while (getchar() != '\n');
         if (!isAccountPresent(accountNum, u)){
             system("clear");
             printf("This account does not exist.");
@@ -56,23 +60,25 @@ void mainMenu(struct User u)
         checkAllAccounts(u);
         break;
     case 5:
-        // student TODO : add your **Make transaction** function
+        // Make transaction function
         printf("Enter account number:");
         scanf("%lld", &accountNum);
+        while (getchar() != '\n');
         if (!isAccountPresent(accountNum, u)){
             system("clear");
             printf("This account does not exist.");
             mainMenu(u);
         }
         printf("Do you want to:\n        1-> Withdraw\n        2-> Deposit\n\n");
-        //printf("Enter your choice:");
         scanf("%d", &choice);
+        while (getchar() != '\n');
         makeTransaction(u, accountNum, choice);
         break;
     case 6:
-        // student TODO : add your **Remove existing account** function
+        // Remove existing account function
         printf("Enter account number to be deleted:");
         scanf("%lld", &accountNum);
+        while (getchar() != '\n');
         if (!isAccountPresent(accountNum, u)){
             system("clear");
             printf("The account does not exist.");
@@ -81,7 +87,7 @@ void mainMenu(struct User u)
         removeAccount(u, accountNum);
         break;
     case 7:
-        // student TODO : add your **Transfer owner** function
+        // Transfer owner function
         printf("Enter the account number to be transferred:");
         scanf("%lld", &accountNum);
         if (!isAccountPresent(accountNum, u)){
@@ -92,13 +98,24 @@ void mainMenu(struct User u)
         transferAccount(u, accountNum);
         break;
     case 8:
+        // Check the details of existing accounts function
+        printf("Enter account number:");
+        scanf("%lld", &accountNum);
+        while (getchar() != '\n');
+        if (!isAccountPresent(accountNum, u)){
+            system("clear");
+            printf("This account does not exist.");
+            mainMenu(u);
+        }
+        checkAccountBalance(u, accountNum);
+        break;
+    case 9:
         exit(1);
         break;
     default:
         printf("Invalid operation! Please choose one of the listed options.\n");
         sleep(2);
         mainMenu(u);
-       // exit(1);
     }
 };
 
@@ -109,9 +126,8 @@ void initMenu(struct User *u)
    
     system("clear");
     
-    printf("\n\n\t\t======= ATM =======\n");
-    printf("\n\t\t-->> Feel free to login / register :\n");
-   // printf("\n\t\t[1]- sign up\n");
+    printf("\n\n\t\t============= ATM MANAGEMENT SYSTEM =============\n");
+    printf("\n\t\t-->> Welcome! Feel free to login / register <<--\n");
     printf("\n\t\t[1]- login\n");
     printf("\n\t\t[2]- register\n");
     printf("\n\t\t[3]- exit\n");
@@ -137,7 +153,7 @@ void initMenu(struct User *u)
             r = 1;
             break;
         case 2:
-            // student TODO : add your **Registration** function
+            // Registration function
             signUpMenu(u->name, u->password);
             r = 1;
             break;
@@ -147,8 +163,8 @@ void initMenu(struct User *u)
         default:
             printf("Please insert a valid operation!\n");
             sleep(2);
-            initMenu(u);
-           // exit(1);
+         initMenu(u);
+        
         }
     }
 };

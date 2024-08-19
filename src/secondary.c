@@ -1,6 +1,7 @@
 #include "header.h"
 #include <ctype.h>
 
+// password encryption
 void alphamirror(char *str) {
     char c;
     while (*str) {

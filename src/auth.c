@@ -10,30 +10,31 @@ void signUpMenu(char a[50], char pass[50]){
 
     system("clear");
     signup:
-    printf("\n\n\n\t\t\t\t   Bank Management System");
-    
-    printf("\n\n\t\t\t\t----------Sign up----------\n\n\t\t\t\tEnter Username:");
+    printf("\n\n\n\t\t\t\t  ============== REGISTER =============="); 
+    printf("\n\n\t\t\t\tEnter Username (please enter only one name):");
     scanf("%s", a);
-
-    // disabling echo
+     // Discard any remaining input after the first word (name)
+    while (getchar() != '\n');
+    
     tcgetattr(fileno(stdin), &oflags);
     nflags = oflags;
-    nflags.c_lflag &= ~ECHO;
+    nflags.c_lflag &= ECHO;
     nflags.c_lflag |= ECHONL;
 
     if (tcsetattr(fileno(stdin), TCSANOW, &nflags) != 0)
     {
         perror("tcsetattr");
-        return exit(1);
+        exit(1);
     }
-    printf("\n\n\t\t\t\tEnter Password:");
+    printf("\n\n\t\t\t\tEnter Password (No spaces allowed):");
     scanf("%s", pass);
+    while (getchar() != '\n');
     alphamirror(pass);
     // restore terminal
     if (tcsetattr(fileno(stdin), TCSANOW, &oflags) != 0)
     {
         perror("tcsetattr");
-        return exit(1);
+        exit(1);
     }
 
     FILE *fp;
@@ -79,30 +80,32 @@ void loginMenu(char a[50], char pass[50])
     struct termios oflags, nflags;
 
     system("clear");
-    printf("\n\n\n\t\t\t\t   Bank Management System");
-    printf("\n\n\t\t\t\t----------Login----------\n\n\t\t\t\tEnter Username:");
+    printf("\n\n\n\t\t\t\t============= LOGIN =============");
+    printf("\n\n\t\t\t\tEnter Username:");
     scanf("%s", a);
+    while (getchar() != '\n');
 
-    // disabling echo
+    //disable echo
     tcgetattr(fileno(stdin), &oflags);
     nflags = oflags;
-    nflags.c_lflag |= ECHO;
+    nflags.c_lflag &= ~ECHO;
     nflags.c_lflag |= ECHONL;
 
     if (tcsetattr(fileno(stdin), TCSANOW, &nflags) != 0)
     {
         perror("tcsetattr");
-        return exit(1);
+        exit(1);
     }
     printf("\n\n\t\t\t\tEnter Password:");
     scanf("%s", pass);
+    while (getchar() != '\n');
     alphamirror(pass);
 
     // restore terminal
     if (tcsetattr(fileno(stdin), TCSANOW, &oflags) != 0)
     {
         perror("tcsetattr");
-        return exit(1);
+        exit(1);
     }
 };
 
