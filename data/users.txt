@@ -1,7 +1,2 @@
-0 Alice j1d2v3i4g5b6
-1 Michel j1d2v3i4g5b6
-
-
-2 rabin otieno 
-3 jin doe zz
-5 jon doe zyx 44
+0 rabin_otieno zyx_45
+1 jon zyx34

@@ -1,6 +1,15 @@
 #include "header.h"
 #include <ctype.h>
 
+// replace space character in the string with an underscore
+void sanitize(char *str) {
+    for (int i = 0; str[i] != '\0'; i++) {
+        if (str[i] == ' ') {
+            str[i] = '_';
+        }
+    }
+}
+
 // clear input buffer
 void clearInputBuffer() {
     int c;

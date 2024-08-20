@@ -61,3 +61,4 @@ bool checkRecords();
 void alphamirror(char *str);
 bool is_valid_number();
 void clearInputBuffer();
+void sanitize(char *str);

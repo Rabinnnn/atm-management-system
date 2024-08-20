@@ -4,7 +4,7 @@
 
 char *USERS = "./data/users.txt";
 
-
+// display signup menu
 void signUpMenu(char a[50], char pass[50]){
     struct termios oflags, nflags;
 
@@ -15,7 +15,6 @@ void signUpMenu(char a[50], char pass[50]){
     // Clear any leftover input in the buffer
     clearInputBuffer();
 
-    // Get the username
     fgets(a, 50, stdin);
 
     // Remove the newline character if it's read by fgets
@@ -25,21 +24,10 @@ void signUpMenu(char a[50], char pass[50]){
         clearInputBuffer();  // Clear remaining input if user entered more than 49 characters
     }
    
-    
-    // tcgetattr(fileno(stdin), &oflags);
-    // nflags = oflags;
-    //  nflags.c_lflag &= ECHO;
-    //  nflags.c_lflag |= ECHONL;
+    sanitize(a);
+   
 
-
-    // if (tcsetattr(fileno(stdin), TCSANOW, &nflags) != 0)
-    // {
-    //     perror("tcsetattr");
-    //     exit(1);
-    // }
     printf("\n\n\t\t\t\tEnter Password (No spaces allowed):");
-  //  scanf("%s", pass);
-   //clearInputBuffer();
 
     // Get the username
     fgets(pass, 50, stdin);
@@ -50,14 +38,10 @@ void signUpMenu(char a[50], char pass[50]){
     } else {
         clearInputBuffer();  // Clear remaining input if user entered more than 49 characters
     }
-       alphamirror(pass);
-    // // restore terminal
-    // if (tcsetattr(fileno(stdin), TCSANOW, &oflags) != 0)
-    // {
-    //     perror("tcsetattr");
-    //     exit(1);
-    // }
-
+    
+    sanitize(pass);
+    alphamirror(pass);
+ 
     FILE *fp;
     char names[100][100]; 
     struct User userChecker;
@@ -95,7 +79,7 @@ void signUpMenu(char a[50], char pass[50]){
 
 };
 
-
+// display login menu
 void loginMenu(char a[50], char pass[50])
 {
     struct termios oflags, nflags;
@@ -103,8 +87,20 @@ void loginMenu(char a[50], char pass[50])
     system("clear");
     printf("\n\n\n\t\t\t\t============= LOGIN =============");
     printf("\n\n\t\t\t\tEnter Username:");
-    scanf("%s", a);
-    while (getchar() != '\n');
+     // Clear any leftover input in the buffer
+    clearInputBuffer();
+
+    // Get the username
+    fgets(a, 50, stdin);
+
+    // Remove the newline character if it's read by fgets
+    if (a[strlen(a) - 1] == '\n') {
+        a[strlen(a) - 1] = '\0';  // Replace newline with null terminator
+    } else {
+        clearInputBuffer();  // Clear remaining input if user entered more than 49 characters
+    }
+    
+    sanitize(a);
 
     //disable echo
     tcgetattr(fileno(stdin), &oflags);
@@ -118,8 +114,15 @@ void loginMenu(char a[50], char pass[50])
         exit(1);
     }
     printf("\n\n\t\t\t\tEnter Password:");
-    scanf("%s", pass);
-    while (getchar() != '\n');
+    fgets(pass, 50, stdin);
+
+    // Remove the newline character if it's read by fgets
+    if (pass[strlen(pass) - 1] == '\n') {
+        pass[strlen(pass) - 1] = '\0';  // Replace newline with null terminator
+    } else {
+        clearInputBuffer();  // Clear remaining input if user entered more than 49 characters
+    }
+    sanitize(pass);
     alphamirror(pass);
 
     // restore terminal
@@ -132,21 +135,24 @@ void loginMenu(char a[50], char pass[50])
 
 
 
-const char *getPassword(struct User *u)
-{
+// retrieve password from storage
+const char *getPassword(struct User *u) {
     FILE *fp;
     struct User userChecker;
+    char line[150];
     char id[10];
-    if ((fp = fopen("./data/users.txt", "r")) == NULL)
-    {
+
+    if ((fp = fopen("./data/users.txt", "r")) == NULL) {
         printf("Error! opening file");
         exit(1);
     }
 
-    while (fscanf(fp, "%s %s %s", id, userChecker.name, userChecker.password) != EOF)
-    {
-        if (strcmp(userChecker.name, u->name) == 0)
-        {
+    while (fgets(line, sizeof(line), fp) != NULL) {
+        sscanf(line, "%s %s %s", id, userChecker.name, userChecker.password);
+        printf("u.name:%s\n", u->name);
+        printf("userChecker.name:%s", userChecker.name);
+
+        if (strcmp(userChecker.name, u->name) == 0) {
             fclose(fp);
             u->id = atoi(id);
             char *buff = userChecker.password;
