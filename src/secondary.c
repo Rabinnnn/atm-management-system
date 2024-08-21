@@ -35,11 +35,23 @@ void alphamirror(char *str) {
     }
 }
 
-bool is_valid_number(char *phone) {
+
+bool is_valid_number(char *num) {
     // Check each character to ensure it's a digit
-    for (int i = 0; i < strlen(phone); i++) {
-        if (!isdigit(phone[i])) {
+    for (int i = 0; i < strlen(num); i++) {
+        if (!isdigit(num[i])) {
             return false;  // Invalid if a non-digit is found
+        }
+    }
+
+    return true;  // Valid if all characters are digits
+}
+
+bool is_valid_string(char *strInput) {
+    // Check each character to ensure it's a digit
+    for (int i = 0; i < strlen(strInput); i++) {
+        if (!isalpha(strInput[i]) && (strInput[i] != ' ')) {
+            return false;  // Invalid if a non-alphabet is found
         }
     }
 

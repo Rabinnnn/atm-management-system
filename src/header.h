@@ -60,5 +60,6 @@ bool checkUsers();
 bool checkRecords();
 void alphamirror(char *str);
 bool is_valid_number();
+bool is_valid_string(char *strInput);
 void clearInputBuffer();
 void sanitize(char *str);

@@ -148,25 +148,31 @@ date:
         r.deposit.day <= 0 || r.deposit.day > 31 ||
         r.deposit.year < 1900 || r.deposit.year > 3000){
         printf("Invalid date. Usage Example: 8/8/2024\n");
-        exit(1);
-      
+        goto date;    
     }
     
 
 accountNo:
-    printf("\nEnter the account number:");
-    char doen[10];
-    scanf("%10s", doen);
-    while (getchar() != '\n');
+printf("\nEnter the account number:");
+ char doen[10]; 
+    if (fgets(doen, sizeof(doen), stdin) != NULL) {
+        // Remove the newline character if present
+        size_t len = strlen(doen);
+        if (len > 0 && doen[len-1] == '\n') {
+            doen[len-1] = '\0';
+        }
+    }
+    
     if(!is_valid_number(doen)){
         printf("\nInvalid account number!");
         goto accountNo;
     }
-        r.accountNbr = strtoll(doen, NULL, 10);
     
-  
-     while (getAccountFromFile(pf, userName, &cr))
-    {
+    // Convert to long long int
+    r.accountNbr = strtoll(doen, NULL, 10);
+    while (getAccountFromFile(pf, userName, &cr))
+    {     
+   
         if (strcmp(userName, u.name) == 0 && cr.accountNbr == r.accountNbr)
         {
             printf("\n This Account already exists for this user\n\n");
@@ -183,14 +189,35 @@ accountNo:
     }
    
     r.id = ind;
-    u.id = getUserId(u.name);
+    u.id = getUserId(u.name); 
+    
+country:
     printf("\nEnter the country:");
-    scanf("%s", r.country);
-    while (getchar() != '\n');
+    fgets(r.country, 20, stdin);
+    
+    // Remove the newline character if it's read by fgets
+    if (r.country[strlen(r.country) - 1] == '\n') {
+        r.country[strlen(r.country) - 1] = '\0';  // Replace newline with null terminator
+    } else {
+        clearInputBuffer();  // Clear remaining input if user entered more than 49 characters
+    }
+
+    if (!is_valid_string(r.country)){
+       printf("\n Invalid input!\n\n");
+       goto country;
+    }
+    sanitize(r.country);
 phone:
     printf("\nEnter the phone number:");
-    scanf("%s", r.phone);
-    while (getchar() != '\n');
+     fgets(r.phone, 11, stdin);
+
+    // Remove the newline character if it's read by fgets
+    if (r.phone[strlen(r.phone) - 1] == '\n') {
+        r.phone[strlen(r.phone) - 1] = '\0'; 
+    } else {
+        clearInputBuffer();  
+    }
+
     if(!is_valid_number(r.phone)){
         printf("\nInvalid phone number:");
         goto phone;
@@ -201,12 +228,34 @@ phone:
        
     }
 amount:
+   
     printf("\nEnter amount to deposit: $");
-    scanf("%lf", &r.amount);
-    while (getchar() != '\n');
+     char *endPtr;
+    char amount[20];
+    fgets(amount, 20, stdin);
+
+    // Remove the newline character if it's read by fgets
+    if (amount[strlen(amount) - 1] == '\n') {
+        amount[strlen(amount) - 1] = '\0';  // Replace newline with null terminator
+    } else {
+        clearInputBuffer();  // Clear remaining input if user entered more than 49 characters
+    }
+
+    
+     r.amount = strtod(amount, &endPtr);
+
+    // Check if the conversion was successful
+    if (endPtr == amount) {
+        printf("Invalid input! Please enter only digits.\n");
+        goto amount;
+    }else if (*endPtr != '\0') {
+        printf("Invalid input! Please enter only digits.\n");
+        goto amount;
+    } 
+
     if(r.amount <= 0 || r.amount > 9999999999){
         printf("\nInvalid amount! (min allowed:$1, max allowed: $9999999999)\n");
-        exit(1);
+       goto amount;
        
     }
 accType:
