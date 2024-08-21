@@ -48,6 +48,9 @@ bool is_valid_number(char *num) {
 }
 
 bool is_valid_string(char *strInput) {
+    if (strlen(strInput) < 1) {
+        return false;
+    }
     // Check each character to ensure it's a digit
     for (int i = 0; i < strlen(strInput); i++) {
         if (!isalpha(strInput[i]) && (strInput[i] != ' ')) {

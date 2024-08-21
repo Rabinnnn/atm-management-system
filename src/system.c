@@ -151,16 +151,21 @@ date:
         goto date;    
     }
     
+    
 
 accountNo:
 printf("\nEnter the account number:");
- char doen[10]; 
+ char doen[20]; 
     if (fgets(doen, sizeof(doen), stdin) != NULL) {
         // Remove the newline character if present
         size_t len = strlen(doen);
         if (len > 0 && doen[len-1] == '\n') {
             doen[len-1] = '\0';
         }
+    }
+    if ((strlen(doen) < 1 ) || (strlen(doen) > 18)){
+        printf("\nInvalid account number!");
+        goto accountNo;
     }
     
     if(!is_valid_number(doen)){
@@ -209,7 +214,7 @@ country:
     sanitize(r.country);
 phone:
     printf("\nEnter the phone number:");
-     fgets(r.phone, 11, stdin);
+     fgets(r.phone, 16, stdin);
 
     // Remove the newline character if it's read by fgets
     if (r.phone[strlen(r.phone) - 1] == '\n') {
@@ -222,10 +227,13 @@ phone:
         printf("\nInvalid phone number:");
         goto phone;
     }
-    if(strlen(r.phone) != 9){
+    if(strlen(r.phone) < 5){
         printf("\nInvalid phone number!\n");
         goto phone;
        
+    }else if(strlen(r.phone) > 14){
+         printf("\nInvalid phone number!\n");
+        goto phone;
     }
 amount:
    
@@ -260,16 +268,29 @@ amount:
     }
 accType:
     printf("\nChoose the type of account:\n\t-> savings\n\t-> current\n\t-> fixed01(for 1 year)\n\t-> fixed02(for 2 years)\n\t-> fixed03(for 3 years)\n\n\tEnter your choice:");
-    scanf("%s", r.accountType);
-    while (getchar() != '\n');
+    fgets(r.accountType, 10, stdin);
+
+    if (strlen(r.accountType) > 8){
+         printf("\nInvalid choice! Please choose and enter one of the listed options.\n");
+        // sleep(2);
+        goto accType;
+    }
+    // Remove the newline character if it's read by fgets
+    if (r.accountType[strlen(r.accountType) - 1] == '\n') {
+        r.accountType[strlen(r.accountType) - 1] = '\0'; 
+    } else {
+        clearInputBuffer();  
+    }
+
      if (strcmp(r.accountType, "current") != 0 &&
         strcmp(r.accountType, "savings") != 0 &&
         strcmp(r.accountType, "fixed01") != 0 &&
         strcmp(r.accountType, "fixed02") != 0 &&
         strcmp(r.accountType, "fixed03") != 0){
-        printf("\nPlease choose and enter one of the listed options.\n");
-         sleep(2);
+        //system("clear");
+        printf("\nInvalid choice! Please choose and enter one of the listed options.\n");
         goto accType;
+
     }
 
     saveAccountToFile(pf, u, r);
