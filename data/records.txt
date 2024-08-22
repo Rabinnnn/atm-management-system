@@ -1,4 +1,4 @@
-0 1 jon 567 2/2/2012 South_Africa 849483948 345.00 savings
+0 1 jon 567 2/2/2012 south_dak 445345 345.00 savings
 
 1 1 jon 98798 2/2/2000 kenya 123222111 230.33 fixed03
 
@@ -7,4 +7,6 @@
 3 0 rabin_otieno 1 3/3/2023 ddsg 33442 3344.00 savings
 
 4 0 rabin_otieno 3 2/3/2021 ke 90988 89.00 savings
+
+5 1 jon 44 3/3/2013 kenya 45339 45.00 savings
 

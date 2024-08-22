@@ -29,20 +29,50 @@ void mainMenu(struct User u)
   
     case 2:
         // Update account information function
-        printf("Please enter the account number:");
-        scanf("%lld", &accountNum);
-        while (getchar() != '\n');
+        clearInputBuffer();
+        case2Account:
+        printf("\nPlease enter the account number:");
+        char doen[20]; 
+            if (fgets(doen, sizeof(doen), stdin) != NULL) {
+                // Remove the newline character if present
+                size_t len = strlen(doen);
+                if (len > 0 && doen[len-1] == '\n') {
+                    doen[len-1] = '\0';
+                }
+            }
+            if ((strlen(doen) < 1 ) || (strlen(doen) > 18)){
+                printf("\nInvalid account number!");
+                goto case2Account;
+            }
+            
+            if(!is_valid_number(doen)){
+                printf("\nInvalid account number!");
+                goto case2Account;
+            }
+            
+            // Convert to long long int
+            accountNum = strtoll(doen, NULL, 10);
+
+        
+        //printf("Please enter the account number:");
+       // scanf("%lld", &accountNum);
+       // while (getchar() != '\n');
         if (!isAccountPresent(accountNum, u)){
             system("clear");
             printf("This account does not exist!");
             sleep(2);
             mainMenu(u);
         }
+        accountUpdate:
         printf("\nWhich field would you like to change?\n1-> phone number\n2-> country\n");
         scanf("%d", &choice);
         while (getchar() != '\n');
-        updateAccountInfo(u, accountNum, choice);
-
+        if (choice == 1 || choice == 2){
+            updateAccountInfo(u, accountNum, choice);
+        }else{
+            printf("Invalid input!\n");
+            goto accountUpdate;
+        }
         break;
     case 3:
         // Check the details of existing accounts function
