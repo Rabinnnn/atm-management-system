@@ -140,8 +140,9 @@ void createNewAcc(struct User u)
 noAccount:
     system("clear");
     printf("\t\t\t============= New record =============\n");
+clearInputBuffer();
 date:
-    printf("\nEnter today's date(mm/dd/yyyy):");
+    /*printf("\nEnter today's date(mm/dd/yyyy):");
     scanf("%d/%d/%d", &r.deposit.month, &r.deposit.day, &r.deposit.year);
     while (getchar() != '\n');
     if(r.deposit.month <= 0 || r.deposit.month > 12 ||
@@ -149,10 +150,32 @@ date:
         r.deposit.year < 1900 || r.deposit.year > 3000){
         printf("Invalid date. Usage Example: 8/8/2024\n");
         goto date;    
-    }
-    
-    
+    } */
+      
+    printf("\nEnter today's date (mm/dd/yyyy): "); 
+        
+    char date_input[50];
+    char extra_input[10];
+    int num_fields;
+    fgets(date_input, sizeof(date_input), stdin);
 
+    // Parse the input string
+        num_fields = sscanf(date_input, "%d/%d/%d %s", &r.deposit.month, &r.deposit.day, &r.deposit.year, extra_input);
+
+    // Check if the input is valid
+    if (num_fields != 3 || r.deposit.month <= 0 || r.deposit.month > 12 ||
+        r.deposit.day <= 0 || r.deposit.day > 31 ||
+        r.deposit.year < 1900 || r.deposit.year > 3000) {
+        printf("Invalid date! Usage Example: 8/8/2024\n");
+        goto date;
+    }
+
+     if (num_fields == 4) {
+        printf("Invalid date! Usage Example: 8/8/2024\n");
+        goto date;
+    } 
+    
+   
 accountNo:
 printf("\nEnter the account number:");
  char doen[20]; 
