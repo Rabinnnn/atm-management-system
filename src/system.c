@@ -384,13 +384,50 @@ void updateAccountInfo(struct User u, long long int accountNum, int choice){
         if(strcmp(userName, u.name) == 0 &&
             r.accountNbr == accountNum){
             if(choice == 1){
-                printf("Enter the new phone number:");
-                scanf("%s", r.phone);
+                phoneUpdate:
+                printf("\nEnter the new phone number:");
+                fgets(r.phone, 16, stdin);
+
+                // Remove the newline character if it's read by fgets
+                if (r.phone[strlen(r.phone) - 1] == '\n') {
+                    r.phone[strlen(r.phone) - 1] = '\0'; 
+                } else {
+                    clearInputBuffer();  
+                }
+
+                if(!is_valid_number(r.phone)){
+                    printf("\nInvalid phone number:");
+                    goto phoneUpdate;
+                }
+                if(strlen(r.phone) < 5){
+                    printf("\nInvalid phone number!\n");
+                    goto phoneUpdate;
+                
+                }else if(strlen(r.phone) > 14){
+                    printf("\nInvalid phone number!\n");
+                    goto phoneUpdate;
+                }
             }
             else if(choice == 2){
-                printf("Enter the new country:");
-                scanf("%s", r.country);
-            }
+               // printf("Enter the new country:");
+                //scanf("%s", r.country);
+                countryUpdate:
+                printf("\nEnter the new country name:");
+                fgets(r.country, 20, stdin);
+                
+                // Remove the newline character if it's read by fgets
+                if (r.country[strlen(r.country) - 1] == '\n') {
+                    r.country[strlen(r.country) - 1] = '\0';  // Replace newline with null terminator
+                } else {
+                    clearInputBuffer();  // Clear remaining input if user entered more than 49 characters
+                }
+
+                if (!is_valid_string(r.country)){
+                printf("\n Invalid input!\n\n");
+                goto countryUpdate;
+                }
+                sanitize(r.country);
+             }
         }
 
         arr[index] = r;
