@@ -33,8 +33,10 @@ $  ./atm
 ```
 
 * After successfully running the program, follow the onscreen instructions to use the program.
-* **NOTE:** All inputs are taken as a single string. For instance, if you enter your name as John Doe only John will be used and Doe will be discarded.
-* If you want to do a full-rebuild use the following command:
+* **NOTE:** 
+* Account number accepts a minimum of 1 and a maximum of 18 characters.
+* Phone number accepts a minimum of 5 and maximum of 14 characters
+
 ```bash
 $  make clean
 ```

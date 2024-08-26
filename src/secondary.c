@@ -17,7 +17,7 @@ void clearInputBuffer() {
     }
 }
 
-// password encryption
+// password encryption function
 void alphamirror(char *str) {
     char c;
     while (*str) {
@@ -35,7 +35,7 @@ void alphamirror(char *str) {
     }
 }
 
-
+// check if all the characters of the string are digits
 bool is_valid_number(char *num) {
     // Check each character to ensure it's a digit
     for (int i = 0; i < strlen(num); i++) {
@@ -47,20 +47,21 @@ bool is_valid_number(char *num) {
     return true;  // Valid if all characters are digits
 }
 
+// check if all the characters of the string are alphabets
 bool is_valid_string(char *strInput) {
     if (strlen(strInput) < 1) {
         return false;
     }
-    // Check each character to ensure it's a digit
     for (int i = 0; i < strlen(strInput); i++) {
         if (!isalpha(strInput[i]) && (strInput[i] != ' ')) {
-            return false;  // Invalid if a non-alphabet is found
+            return false;
         }
     }
 
-    return true;  // Valid if all characters are digits
+    return true;
 }
 
+// check if the value is available in storage
 bool isPresent(char array[100][100], char* str){
     for (int i = 0; i < 100; i++){
         if (strcmp(array[i], str) == 0){
@@ -71,6 +72,7 @@ bool isPresent(char array[100][100], char* str){
     return false;
 }
 
+// check if the user logged already has an account with the account number being entered
 bool isAccountPresent(long long int num, struct User u){
     struct Record r;
     FILE *pf = fopen("./data/records.txt", "r+");
@@ -89,6 +91,7 @@ bool isAccountPresent(long long int num, struct User u){
     return false;
 }
 
+// check if the account number being entered has already been used for any account
 bool isAccountPresentAny(long long int num, struct User u){
     struct Record r;
     FILE *pf = fopen("./data/records.txt", "r+");
@@ -103,10 +106,10 @@ bool isAccountPresentAny(long long int num, struct User u){
             return true;
         }
     }
-
     return false;
 }
 
+// check if the name has already been used
 bool isNamePresent(char *name){
     char id[5];
     char userName[100];
@@ -121,6 +124,7 @@ bool isNamePresent(char *name){
     return false;
 }
 
+// check if the user credentials being entered are registered
 bool checkUsers(){
     FILE* pf = fopen("./data/users.txt", "r+");
 

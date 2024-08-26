@@ -14,9 +14,6 @@ void signUpMenu(char a[50], char pass[50]){
     clearInputBuffer();
     username:
     printf("\n\n\t\t\t\tEnter Username:");
-    // Clear any leftover input in the buffer
-   // clearInputBuffer();
-
     fgets(a, 50, stdin);
 
     // Remove the newline character if it's read by fgets
@@ -29,7 +26,7 @@ void signUpMenu(char a[50], char pass[50]){
         printf("\n\n\t\t\t\tPlease enter a valid name!");
         goto username;
     }
-
+    
     sanitize(a);
    
     password:
@@ -78,14 +75,12 @@ void signUpMenu(char a[50], char pass[50]){
         printf("This user already exists!\n");
         sleep(2);
         goto signup;
-       // exit(1);
     }
     else{
         fprintf(fp, "%d %s %s", counter, a, pass);
     }
     
     fclose(fp);
-
 };
 
 // display login menu
@@ -99,14 +94,12 @@ void loginMenu(char a[50], char pass[50])
      // Clear any leftover input in the buffer
     clearInputBuffer();
 
-    // Get the username
     fgets(a, 50, stdin);
 
-    // Remove the newline character if it's read by fgets
     if (a[strlen(a) - 1] == '\n') {
-        a[strlen(a) - 1] = '\0';  // Replace newline with null terminator
+        a[strlen(a) - 1] = '\0'; 
     } else {
-        clearInputBuffer();  // Clear remaining input if user entered more than 49 characters
+        clearInputBuffer(); 
     }
     
     sanitize(a);
@@ -125,11 +118,10 @@ void loginMenu(char a[50], char pass[50])
     printf("\n\n\t\t\t\tEnter Password:");
     fgets(pass, 50, stdin);
 
-    // Remove the newline character if it's read by fgets
     if (pass[strlen(pass) - 1] == '\n') {
-        pass[strlen(pass) - 1] = '\0';  // Replace newline with null terminator
+        pass[strlen(pass) - 1] = '\0';  
     } else {
-        clearInputBuffer();  // Clear remaining input if user entered more than 49 characters
+        clearInputBuffer(); 
     }
     sanitize(pass);
     alphamirror(pass);
@@ -141,7 +133,6 @@ void loginMenu(char a[50], char pass[50])
         exit(1);
     }
 };
-
 
 
 // retrieve password from storage
