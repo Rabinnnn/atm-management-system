@@ -243,6 +243,10 @@ printf("\nEnter the account number:");
     }
     
     r.accountNbr = strtoll(doen, NULL, 10);
+    if (r.accountNbr == 0){
+        printf("\nInvalid account number!");
+        goto accountNo;
+    } 
     while (getAccountFromFile(pf, userName, &cr))
     {     
    
@@ -773,7 +777,6 @@ void transferAccount(struct User u, long long int accountNum){
     fclose(pf);
 
     printf("Enter the name of the person you wish to transfer to:");
-    clearInputBuffer();
 
     fgets(newOwnerName, 50, stdin);
 

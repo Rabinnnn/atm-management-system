@@ -36,6 +36,7 @@ $  ./atm
 ## NOTE: ## 
 * Account number accepts a minimum of 1 and a maximum of 18 characters.
 * Phone number accepts a minimum of 5 and maximum of 14 characters
+* When providing account number avoid starting with digit 0. If you enter only zeroes it is considered invalid.
 * If you want to do a full-rebuild use the following command:
 ```bash
 $  make clean

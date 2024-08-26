@@ -83,9 +83,14 @@ bool isAccountPresent(long long int num, struct User u){
         &r.deposit.year, r.country,
         r.phone, &r.amount, r.accountType) != EOF){
         
-        if((num == r.accountNbr && strcmp(r.name, u.name) == 0)){
+        char numStr[21]; // Buffer to hold the string representation (long long int can be up to 20 digits)
+        char accountNbrStr[21];
+        sprintf(numStr, "%lld", num);
+        sprintf(accountNbrStr, "%lld", r.accountNbr);
+        if((num == r.accountNbr && strcmp(r.name, u.name) == 0 && (strlen(numStr) == strlen(accountNbrStr)))){
             return true;
         }
+        
     }
 
     return false;
