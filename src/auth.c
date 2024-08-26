@@ -74,7 +74,7 @@ void signUpMenu(char a[50], char pass[50]){
         system("clear");
         printf("This user already exists!\n");
         sleep(2);
-        goto signup;
+        goto username;
     }
     else{
         fprintf(fp, "%d %s %s", counter, a, pass);

@@ -58,7 +58,7 @@ void mainMenu(struct User u)
             sleep(2);
             mainMenu(u);
         }
-        clearInputBuffer();
+       // clearInputBuffer();
         accountUpdate:
         printf("\nWhich field would you like to change?\n1-> phone number\n2-> country\n");
               
