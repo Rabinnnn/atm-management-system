@@ -90,10 +90,9 @@ void loginMenu(char a[50], char pass[50])
 
     system("clear");
     printf("\n\n\n\t\t\t\t============= LOGIN =============");
+     clearInputBuffer();
+    usernameLogin:
     printf("\n\n\t\t\t\tEnter Username:");
-     // Clear any leftover input in the buffer
-    clearInputBuffer();
-
     fgets(a, 50, stdin);
 
     if (a[strlen(a) - 1] == '\n') {
@@ -101,7 +100,10 @@ void loginMenu(char a[50], char pass[50])
     } else {
         clearInputBuffer(); 
     }
-    
+     if (!is_valid_string(a)){
+        printf("\n\n\t\t\t\tPlease enter a valid name!");
+        goto usernameLogin;
+    }
     sanitize(a);
 
     //disable echo
@@ -149,8 +151,6 @@ const char *getPassword(struct User *u) {
 
     while (fgets(line, sizeof(line), fp) != NULL) {
         sscanf(line, "%s %s %s", id, userChecker.name, userChecker.password);
-        printf("u.name:%s\n", u->name);
-        printf("userChecker.name:%s", userChecker.name);
 
         if (strcmp(userChecker.name, u->name) == 0) {
             fclose(fp);
