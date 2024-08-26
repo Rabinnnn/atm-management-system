@@ -65,13 +65,35 @@ void saveRecordToFile(FILE *ptr, struct Record r)
 void stayOrReturn(int notGood, void f(struct User u), struct User u)
 {
     int option;
+    char choices[3]; 
     if (notGood == 0)
     {
         system("clear");
         printf("\n Record not found!!\n");
     invalid:
         printf("\nEnter 0 to try again, 1 to return to main menu and 2 to exit:");
-        scanf("%d", &option);
+       // scanf("%d", &option);
+       
+        
+            if (fgets(choices, sizeof(choices), stdin) != NULL) {
+                // Remove the newline character if present
+                size_t len = strlen(choices);
+                if (len > 0 && choices[len-1] == '\n') {
+                    choices[len-1] = '\0';
+                }
+            }
+            if ((strlen(choices) != 1 )){
+                printf("\nInvalid option!");
+                goto invalid;
+            }
+            
+            if(!is_valid_number(choices)){
+                printf("\nInvalid option!");
+                goto invalid;
+            }            
+            // Convert to long long int
+            option = (int)strtol(choices, NULL, 10);
+
         if (option == 0)
             f(u);
         else if (option == 1)
@@ -85,29 +107,73 @@ void stayOrReturn(int notGood, void f(struct User u), struct User u)
         }
     }
     else
-    {
+    {   
+        invalid2:
         printf("\nEnter 1 to go to the main menu and 0 to exit:");
-        scanf("%d", &option);
+       // scanf("%d", &option);
+       
+            if (fgets(choices, sizeof(choices), stdin) != NULL) {
+                // Remove the newline character if present
+                size_t len = strlen(choices);
+                if (len > 0 && choices[len-1] == '\n') {
+                    choices[len-1] = '\0';
+                }
+            }
+            if ((strlen(choices) != 1 )){
+                printf("\nInvalid option!");
+                goto invalid;
+            }
+            
+            if(!is_valid_number(choices)){
+                printf("\nInvalid option!");
+                goto invalid;
+            }            
+            // Convert to long long int
+            option = (int)strtol(choices, NULL, 10);
     }
     if (option == 1)
     {
         system("clear");
         mainMenu(u);
     }
-    else
+    else if (option == 0)
     {
         system("clear");
         exit(1);
+    }else {
+        printf("\nInvalid option!");
+        goto invalid2;
     }
 }
 
 void success(struct User u)
 {
     int option;
+    char choices[3];
     printf("\n✔ Success!\n\n");
 invalid:
     printf("Enter 1 to go to the main menu and 0 to exit!\n");
-    scanf("%d", &option);
+   // scanf("%d", &option);
+     if (fgets(choices, sizeof(choices), stdin) != NULL) {
+                // Remove the newline character if present
+                size_t len = strlen(choices);
+                if (len > 0 && choices[len-1] == '\n') {
+                    choices[len-1] = '\0';
+                }
+            }
+            if ((strlen(choices) != 1 )){
+                printf("\nInvalid option!");
+                goto invalid;
+            }
+            
+            if(!is_valid_number(choices)){
+                printf("\nInvalid option!");
+                goto invalid;
+            }            
+            // Convert to long long int
+            option = (int)strtol(choices, NULL, 10);
+
+
     system("clear");
     if (option == 1)
     {
@@ -119,7 +185,7 @@ invalid:
     }
     else
     {
-        printf("Insert a valid option!\n");
+        printf("Please insert a valid option!\n");
         goto invalid;
     }
 }
@@ -270,9 +336,7 @@ amount:
         amount[strlen(amount) - 1] = '\0';  // Replace newline with null terminator
     } else {
         clearInputBuffer();  // Clear remaining input if user entered more than 49 characters
-    }
-
-    
+    }   
      r.amount = strtod(amount, &endPtr);
 
     // Check if the conversion was successful
@@ -540,6 +604,8 @@ void makeTransaction(struct User u, long long int accountNum, int choice){
     int index = 0;
     double available = 0;
     double input = 0;
+    char *endPtr;
+    char amount[20];
     while (getAccountFromFile(pf, userName, &r))
     {
         strcpy(r.name, userName);
@@ -558,12 +624,63 @@ void makeTransaction(struct User u, long long int accountNum, int choice){
 
             
             if(choice == 1){
+                amount:
                 printf("Enter the amount you want to withdraw:");
-                scanf("%lf", &input);
+               // scanf("%lf", &input);
+                
+                fgets(amount, 20, stdin);
+
+                // Remove the newline character if it's read by fgets
+                if (amount[strlen(amount) - 1] == '\n') {
+                    amount[strlen(amount) - 1] = '\0';  // Replace newline with null terminator
+                } else {
+                    clearInputBuffer();  // Clear remaining input if user entered more than 49 characters
+                }   
+                input = strtod(amount, &endPtr);
+
+                // Check if the conversion was successful
+                if (endPtr == amount) {
+                    printf("Invalid input! Please enter only digits.\n");
+                    goto amount;
+                }else if (*endPtr != '\0') {
+                    printf("Invalid input! Please enter only digits.\n");
+                    goto amount;
+                } 
+
+                if(input <= 0 || input > 9999999999){
+                    printf("\nInvalid amount! (min allowed:$1, max allowed: $9999999999)\n");
+                goto amount;
+                
+                }
             }
             else if(choice == 2){
                 printf("Enter the amount you want to deposit:");
-                scanf("%lf", &input);
+                //scanf("%lf", &input);
+                 fgets(amount, 20, stdin);
+
+                // Remove the newline character if it's read by fgets
+                if (amount[strlen(amount) - 1] == '\n') {
+                    amount[strlen(amount) - 1] = '\0';  // Replace newline with null terminator
+                } else {
+                    clearInputBuffer();  // Clear remaining input if user entered more than 49 characters
+                }   
+                input = strtod(amount, &endPtr);
+
+                // Check if the conversion was successful
+                if (endPtr == amount) {
+                    printf("Invalid input! Please enter only digits.\n");
+                    goto amount;
+                }else if (*endPtr != '\0') {
+                    printf("Invalid input! Please enter only digits.\n");
+                    goto amount;
+                } 
+
+                if(input <= 0 || input > 9999999999){
+                    printf("\nInvalid amount! (min allowed:$1, max allowed: $9999999999)\n");
+                goto amount;
+                
+                }
+
             }else{
                 printf("Invalid choice! Try again.");
                 mainMenu(u);
@@ -694,7 +811,20 @@ void transferAccount(struct User u, long long int accountNum){
     fclose(pf);
 
     printf("Enter the name of the person you wish to transfer to:");
-    scanf("%s", newOwnerName);
+    //scanf("%s", newOwnerName);
+    clearInputBuffer();
+
+    fgets(newOwnerName, 50, stdin);
+
+    // Remove the newline character if it's read by fgets
+    if (newOwnerName[strlen(newOwnerName) - 1] == '\n') {
+        newOwnerName[strlen(newOwnerName) - 1] = '\0';  // Replace newline with null terminator
+    } else {
+        clearInputBuffer();  // Clear remaining input if user entered more than 49 characters
+    }
+   
+    sanitize(newOwnerName);
+
     if(!isNamePresent(newOwnerName)){
         printf("The user does not exist.");
         mainMenu(u);

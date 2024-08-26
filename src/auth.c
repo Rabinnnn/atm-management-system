@@ -11,9 +11,11 @@ void signUpMenu(char a[50], char pass[50]){
     system("clear");
     signup:
     printf("\n\n\n\t\t\t\t  ============== REGISTER =============="); 
-    printf("\n\n\t\t\t\tEnter Username (please enter only one name):");
-    // Clear any leftover input in the buffer
     clearInputBuffer();
+    username:
+    printf("\n\n\t\t\t\tEnter Username:");
+    // Clear any leftover input in the buffer
+   // clearInputBuffer();
 
     fgets(a, 50, stdin);
 
@@ -23,11 +25,15 @@ void signUpMenu(char a[50], char pass[50]){
     } else {
         clearInputBuffer();  // Clear remaining input if user entered more than 49 characters
     }
-   
+    if (!is_valid_string(a)){
+        printf("\n\n\t\t\t\tPlease enter a valid name!");
+        goto username;
+    }
+
     sanitize(a);
    
-
-    printf("\n\n\t\t\t\tEnter Password (No spaces allowed):");
+    password:
+    printf("\n\n\t\t\t\tEnter Password:");
 
     // Get the username
     fgets(pass, 50, stdin);
@@ -38,7 +44,10 @@ void signUpMenu(char a[50], char pass[50]){
     } else {
         clearInputBuffer();  // Clear remaining input if user entered more than 49 characters
     }
-    
+    if (strlen(pass) < 1){
+        printf("\n\n\t\t\t\tPlease enter a valid password!");
+        goto password;
+    }
     sanitize(pass);
     alphamirror(pass);
  

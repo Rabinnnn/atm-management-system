@@ -5,7 +5,8 @@ void mainMenu(struct User u)
 {
     int option;
     long long int accountNum;
-    int choice;
+   
+   int choice;
     system("clear");
     printf("\n\n\t\t======= ATM MANAGEMENT SYSTEM =======\n\n");
     printf("\n\t\t-->> Feel free to choose one of the options below <<--\n");
@@ -41,12 +42,12 @@ void mainMenu(struct User u)
                 }
             }
             if ((strlen(doen) < 1 ) || (strlen(doen) > 18)){
-                printf("\nInvalid account number!");
+                printf("\nInvalid account number!\n");
                 goto case2Account;
             }
             
             if(!is_valid_number(doen)){
-                printf("\nInvalid account number!");
+                printf("\nInvalid account number!\n");
                 goto case2Account;
             }
             
@@ -63,10 +64,29 @@ void mainMenu(struct User u)
             sleep(2);
             mainMenu(u);
         }
+        clearInputBuffer();
         accountUpdate:
         printf("\nWhich field would you like to change?\n1-> phone number\n2-> country\n");
-        scanf("%d", &choice);
-        while (getchar() != '\n');
+              
+        char change[3]; 
+            if (fgets(change, sizeof(change), stdin) != NULL) {
+                // Remove the newline character if present
+                size_t len = strlen(change);
+                if (len > 0 && change[len-1] == '\n') {
+                    change[len-1] = '\0';
+                }
+            }
+            if ((strlen(change) != 1 )){
+                printf("\nInvalid option!");
+                goto accountUpdate;
+            }
+            
+            if(!is_valid_number(change)){
+                printf("\nInvalid option!");
+                goto accountUpdate;
+            }            
+            // Convert to long long int
+            choice = (int)strtol(change, NULL, 10);
         if (choice == 1 || choice == 2){
             updateAccountInfo(u, accountNum, choice);
         }else{
@@ -76,12 +96,43 @@ void mainMenu(struct User u)
         break;
     case 3:
         // Check the details of existing accounts function
-        printf("Enter account number:");
+      /*  printf("Enter account number:");
         scanf("%lld", &accountNum);
         while (getchar() != '\n');
         if (!isAccountPresent(accountNum, u)){
             system("clear");
             printf("This account does not exist.");
+            mainMenu(u);
+        }
+        checkDetailOfAccount(u, accountNum);
+        break; */
+         clearInputBuffer();
+        case3Account:
+        printf("\nPlease enter the account number:");
+        char acc3[20]; 
+            if (fgets(acc3, sizeof(acc3), stdin) != NULL) {
+                // Remove the newline character if present
+                size_t len = strlen(acc3);
+                if (len > 0 && acc3[len-1] == '\n') {
+                    acc3[len-1] = '\0';
+                }
+            }
+            if ((strlen(acc3) < 1 ) || (strlen(acc3) > 18)){
+                printf("\nInvalid account number!\n");
+                goto case3Account;
+            }
+            
+            if(!is_valid_number(acc3)){
+                printf("\nInvalid account number!\n");
+                goto case3Account;
+            }
+            
+            accountNum = strtoll(acc3, NULL, 10);
+
+        if (!isAccountPresent(accountNum, u)){
+            system("clear");
+            printf("This account does not exist!");
+            sleep(2);
             mainMenu(u);
         }
         checkDetailOfAccount(u, accountNum);
@@ -91,7 +142,7 @@ void mainMenu(struct User u)
         break;
     case 5:
         // Make transaction function
-        printf("Enter account number:");
+       /* printf("Enter account number:");
         scanf("%lld", &accountNum);
         while (getchar() != '\n');
         if (!isAccountPresent(accountNum, u)){
@@ -101,40 +152,187 @@ void mainMenu(struct User u)
         }
         printf("Do you want to:\n        1-> Withdraw\n        2-> Deposit\n\n");
         scanf("%d", &choice);
-        while (getchar() != '\n');
-        makeTransaction(u, accountNum, choice);
+        while (getchar() != '\n');*/
+         clearInputBuffer();
+        case5Account:
+        printf("\nPlease enter the account number:");
+        char acc5[20]; 
+            if (fgets(acc5, sizeof(acc5), stdin) != NULL) {
+                // Remove the newline character if present
+                size_t len = strlen(acc5);
+                if (len > 0 && acc5[len-1] == '\n') {
+                    acc5[len-1] = '\0';
+                }
+            }
+            if ((strlen(acc5) < 1 ) || (strlen(acc5) > 18)){
+                printf("\nInvalid account number!\n");
+                goto case5Account;
+            }
+            
+            if(!is_valid_number(acc5)){
+                printf("\nInvalid account number!\n");
+                goto case5Account;
+            }
+            
+            accountNum = strtoll(acc5, NULL, 10);
+
+        if (!isAccountPresent(accountNum, u)){
+            system("clear");
+            printf("This account does not exist!");
+            sleep(2);
+            mainMenu(u);
+        }
+
+        transactionType:
+        printf("Do you want to:\n        1-> Withdraw\n        2-> Deposit\n\n");
+        char transaction[3]; 
+            if (fgets(transaction, sizeof(transaction), stdin) != NULL) {
+                // Remove the newline character if present
+                size_t len = strlen(transaction);
+                if (len > 0 && transaction[len-1] == '\n') {
+                    transaction[len-1] = '\0';
+                }
+            }
+            if ((strlen(transaction) != 1 )){
+                printf("\nInvalid option!\n");
+                goto transactionType;
+            }
+            
+            if(!is_valid_number(transaction)){
+                printf("\nInvalid option!\n");
+                goto transactionType;
+            }            
+            // Convert to long long int
+            choice = (int)strtol(transaction, NULL, 10);
+        if (choice == 1 || choice == 2){
+            makeTransaction(u, accountNum, choice);
+        }else{
+            printf("Invalid input!\n");
+            goto transactionType;
+        }
         break;
     case 6:
         // Remove existing account function
-        printf("Enter account number to be deleted:");
+     /*   printf("Enter account number to be deleted:");
         scanf("%lld", &accountNum);
         while (getchar() != '\n');
         if (!isAccountPresent(accountNum, u)){
             system("clear");
             printf("The account does not exist.");
+            mainMenu(u);
+        } */
+        clearInputBuffer();
+        removeAccount: 
+        printf("Enter account number to be deleted:");
+        char acc6[20]; 
+            if (fgets(acc6, sizeof(acc6), stdin) != NULL) {
+                // Remove the newline character if present
+                size_t len = strlen(acc6);
+                if (len > 0 && acc6[len-1] == '\n') {
+                    acc6[len-1] = '\0';
+                }
+            }
+            if ((strlen(acc6) < 1 ) || (strlen(acc6) > 18)){
+                printf("\nInvalid account number!\n");
+                goto removeAccount;
+            }
+            
+            if(!is_valid_number(acc6)){
+                printf("\nInvalid account number!\n");
+                goto removeAccount;
+            }
+            
+            // Convert to long long int
+            accountNum = strtoll(acc6, NULL, 10);
+
+        if (!isAccountPresent(accountNum, u)){
+            system("clear");
+            printf("This account does not exist!");
+            sleep(2);
             mainMenu(u);
         }
         removeAccount(u, accountNum);
         break;
     case 7:
         // Transfer owner function
-        printf("Enter the account number to be transferred:");
+       /*printf("Enter the account number to be transferred:");
         scanf("%lld", &accountNum);
         if (!isAccountPresent(accountNum, u)){
             system("clear");
             printf("The account does not exist.");
+            mainMenu(u);
+        } */
+
+        clearInputBuffer();
+        transferOwner: 
+        printf("Enter the account number to be transferred:");
+        char acc7[20]; 
+            if (fgets(acc7, sizeof(acc7), stdin) != NULL) {
+                // Remove the newline character if present
+                size_t len = strlen(acc7);
+                if (len > 0 && acc7[len-1] == '\n') {
+                    acc7[len-1] = '\0';
+                }
+            }
+            if ((strlen(acc7) < 1 ) || (strlen(acc7) > 18)){
+                printf("\nInvalid account number!\n");
+                goto transferOwner;
+            }
+            
+            if(!is_valid_number(acc7)){
+                printf("\nInvalid account number!\n");
+                goto transferOwner;
+            }
+            
+            // Convert to long long int
+            accountNum = strtoll(acc7, NULL, 10);
+
+        if (!isAccountPresent(accountNum, u)){
+            system("clear");
+            printf("This account does not exist!");
+            sleep(2);
             mainMenu(u);
         }
         transferAccount(u, accountNum);
         break;
     case 8:
         // Check the details of existing accounts function
-        printf("Enter account number:");
+       /* printf("Enter account number:");
         scanf("%lld", &accountNum);
         while (getchar() != '\n');
         if (!isAccountPresent(accountNum, u)){
             system("clear");
             printf("This account does not exist.");
+            mainMenu(u);
+        } */
+         clearInputBuffer();
+        accountBalance: 
+        printf("Enter account number:");
+        char acc8[20]; 
+            if (fgets(acc8, sizeof(acc8), stdin) != NULL) {
+                // Remove the newline character if present
+                size_t len = strlen(acc8);
+                if (len > 0 && acc8[len-1] == '\n') {
+                    acc8[len-1] = '\0';
+                }
+            }
+            if ((strlen(acc8) < 1 ) || (strlen(acc8) > 18)){
+                printf("\nInvalid account number!\n");
+                goto accountBalance;
+            }
+            
+            if(!is_valid_number(acc8)){
+                printf("\nInvalid account number!\n");
+                goto accountBalance;
+            }
+            
+            // Convert to long long int
+            accountNum = strtoll(acc8, NULL, 10);
+
+        if (!isAccountPresent(accountNum, u)){
+            system("clear");
+            printf("This account does not exist!");
+            sleep(2);
             mainMenu(u);
         }
         checkAccountBalance(u, accountNum);
