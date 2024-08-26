@@ -33,10 +33,10 @@ $  ./atm
 ```
 
 * After successfully running the program, follow the onscreen instructions to use the program.
-* **NOTE:** 
+ **NOTE:** 
 * Account number accepts a minimum of 1 and a maximum of 18 characters.
 * Phone number accepts a minimum of 5 and maximum of 14 characters
-
+* If you want to do a full-rebuild use the following command:
 ```bash
 $  make clean
 ```
