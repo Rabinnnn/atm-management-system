@@ -73,20 +73,24 @@ bool isPresent(char array[100][100], char* str){
 }
 
 // check if the user logged already has an account with the account number being entered
-bool isAccountPresent(long long int num, struct User u){
+bool isAccountPresent(char *num, struct User u){
     struct Record r;
     FILE *pf = fopen("./data/records.txt", "r+");
+    if (pf == NULL) {
+        // Handle file opening error
+        return false;
+    }
 
-    while(fscanf(pf, "%d %d %s %lld %d/%d/%d %s %s %lf %s",
-        &r.id, &r.userId, r.name, &r.accountNbr,
+    while(fscanf(pf, "%d %d %s %s %d/%d/%d %s %s %lf %s",
+        &r.id, &r.userId, r.name, r.accountNbr,
         &r.deposit.month, &r.deposit.day,
         &r.deposit.year, r.country,
         r.phone, &r.amount, r.accountType) != EOF){
         
-        char numStr[21]; // Buffer to hold the string representation (long long int can be up to 20 digits)
+        char numStr[21]; // Buffer to hold the string representation (char can be up to 20 digits)
         char accountNbrStr[21];
-        sprintf(numStr, "%lld", num);
-        sprintf(accountNbrStr, "%lld", r.accountNbr);
+        sprintf(numStr, "%s", num);
+        sprintf(accountNbrStr, "%s", r.accountNbr);
         if((num == r.accountNbr && strcmp(r.name, u.name) == 0 && (strlen(numStr) == strlen(accountNbrStr)))){
             return true;
         }
@@ -97,12 +101,12 @@ bool isAccountPresent(long long int num, struct User u){
 }
 
 // check if the account number being entered has already been used for any account
-bool isAccountPresentAny(long long int num, struct User u){
+bool isAccountPresentAny(char *num, struct User u){
     struct Record r;
     FILE *pf = fopen("./data/records.txt", "r+");
 
-    while(fscanf(pf, "%d %d %s %lld %d/%d/%d %s %s %lf %s",
-        &r.id, &r.userId, r.name, &r.accountNbr,
+    while(fscanf(pf, "%d %d %s %s %d/%d/%d %s %s %lf %s",
+        &r.id, &r.userId, r.name, r.accountNbr,
         &r.deposit.month, &r.deposit.day,
         &r.deposit.year, r.country,
         r.phone, &r.amount, r.accountType) != EOF){
