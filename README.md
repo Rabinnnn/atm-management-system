@@ -36,7 +36,8 @@ $  ./atm
 ## NOTE: ## 
 * Account number accepts a minimum of 1 and a maximum of 18 characters.
 * Phone number accepts a minimum of 5 and maximum of 14 characters.
-* Name, password and country takes a minimum of 1 character and maximum of 49 characters.
+* Name, and password accepts a minimum of 1 character and maximum of 49 characters.
+* Country accepts a minimum of 2 characters and a maximum of around 65.
 * If you want to do a full-rebuild use the following command:
 ```bash
 $  make clean
