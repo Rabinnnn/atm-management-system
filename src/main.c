@@ -55,7 +55,7 @@ void mainMenu(struct User u)
         if (!isAccountPresent(accountNum, u)){
             system("clear");
             printf("This account does not exist!");
-            sleep(2);
+           // sleep(2);
             mainMenu(u);
         }
        // clearInputBuffer();

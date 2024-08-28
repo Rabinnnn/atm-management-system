@@ -455,8 +455,7 @@ void updateAccountInfo(struct User u, char *accountNum, int choice){
     {   
         strcpy(r.name, userName);
 
-        if(strcmp(userName, u.name) == 0 &&
-            r.accountNbr == accountNum){
+        if(strcmp(userName, u.name) == 0 && strcmp(r.accountNbr, accountNum) == 0){
             if(choice == 1){
                 phoneUpdate:
                 printf("\nEnter the new phone number:");
@@ -522,8 +521,7 @@ void checkDetailOfAccount(struct User u, char *accountNum){
     system("clear");
     while (getAccountFromFile(pf, userName, &r))
     {
-        if (strcmp(userName, u.name) == 0 &&
-            r.accountNbr == accountNum)
+        if (strcmp(userName, u.name) == 0 && strcmp(r.accountNbr, accountNum) == 0)
         {
             printf("\nOwner:%s\nAccount number:%s\nDeposit Date:%d/%d/%d \ncountry:%s \nPhone number:%s \nAmount deposited: $%.2f \nType Of Account:%s\n",
                     userName,
@@ -583,8 +581,7 @@ void checkAccountBalance(struct User u, char *accountNum){
     system("clear");
     while (getAccountFromFile(pf, userName, &r))
     {
-        if (strcmp(userName, u.name) == 0 &&
-            r.accountNbr == accountNum)
+        if (strcmp(userName, u.name) == 0 && strcmp(r.accountNbr, accountNum) == 0)
         {
             printf("\nOwner:%s\nAccount number:%s\nAccount balance: $%.2f \n",
                     userName,
@@ -615,8 +612,7 @@ void makeTransaction(struct User u, char *accountNum, int choice){
     {
         strcpy(r.name, userName);
 
-        if(strcmp(userName, u.name) == 0 &&
-            r.accountNbr == accountNum){
+        if(strcmp(userName, u.name) == 0 && strcmp(r.accountNbr, accountNum) == 0){
             if(strcmp(r.accountType, "fixed01") == 0 ||
             strcmp(r.accountType, "fixed02") == 0 ||
             strcmp(r.accountType, "fixed03") == 0){
@@ -742,8 +738,7 @@ void removeAccount(struct  User u, char *accountNum){
     {
         strcpy(r.name, userName);
 
-        if(strcmp(userName, u.name) == 0 &&
-            r.accountNbr == accountNum){
+        if(strcmp(userName, u.name) == 0 && strcmp(r.accountNbr, accountNum) == 0){
             deleted = r;
         }
         else{
@@ -787,8 +782,7 @@ void transferAccount(struct User u, char *accountNum){
     while (getAccountFromFile(pf, userName, &r))
     {
         strcpy(r.name, userName);
-        if (strcmp(userName, u.name) == 0 &&
-            r.accountNbr == accountNum)
+        if (strcmp(userName, u.name) == 0 && strcmp(r.accountNbr, accountNum) == 0)
         {
             system("clear");
             printf("                       ===== Transfering account:\n");
