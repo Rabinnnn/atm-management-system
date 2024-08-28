@@ -91,7 +91,7 @@ bool isAccountPresent(char *num, struct User u){
         char accountNbrStr[21];
         sprintf(numStr, "%s", num);
         sprintf(accountNbrStr, "%s", r.accountNbr);
-        if((num == r.accountNbr && strcmp(r.name, u.name) == 0 && (strlen(numStr) == strlen(accountNbrStr)))){
+        if((strcmp(num, r.accountNbr) == 0 && strcmp(r.name, u.name) == 0 && (strlen(numStr) == strlen(accountNbrStr)))){
             return true;
         }
         
@@ -111,7 +111,7 @@ bool isAccountPresentAny(char *num, struct User u){
         &r.deposit.year, r.country,
         r.phone, &r.amount, r.accountType) != EOF){
         
-        if(num == r.accountNbr){
+        if(strcmp(num, r.accountNbr) == 0){
             return true;
         }
     }

@@ -6,3 +6,5 @@
 
 1 0 Alice 400 3/3/2000 Kisumu 0709988777 33.00 savings
 
+4 0 Alice 543 3/4/3000 UG 000999 9.00 savings
+
