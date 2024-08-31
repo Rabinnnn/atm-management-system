@@ -841,3 +841,28 @@ void transferAccount(struct User u, char *accountNum){
     success(u);
     
 }
+
+
+
+
+void transactionAcc(struct User u, char *accountNum){
+    char userName[100];
+    struct Record r;
+  
+    FILE *pf = fopen(RECORDS, "a+");
+
+    while (getAccountFromFile(pf, userName, &r))
+    {
+        strcpy(r.name, userName);
+
+        if(strcmp(userName, u.name) == 0 && strcmp(r.accountNbr, accountNum) == 0){
+            if(strcmp(r.accountType, "fixed01") == 0 ||
+            strcmp(r.accountType, "fixed02") == 0 ||
+            strcmp(r.accountType, "fixed03") == 0){
+                system("clear");
+                printf(" Sorry! Transactions are not allowed on fixed accounts.");
+                mainMenu(u);
+            }
+        }
+    }
+}

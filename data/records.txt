@@ -1,10 +1,2 @@
 0 0 Alice 0 10/10/2012 Africa 291321234 22432.52 savings
 
-1 1 Michel 123 10/10/2020 UK 1234123 12345.30 savings
-
-2 1 Michel 2 2/5/2001 Portugal 123543455 1023.23 fixed01
-
-1 0 Alice 400 3/3/2000 Kisumu 0709988777 33.00 savings
-
-4 0 Alice 543 3/4/3000 UG 000999 9.00 savings
-

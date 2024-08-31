@@ -47,6 +47,7 @@ void makeTransaction(struct User u, char *accountNum, int choice);
 void removeAccount(struct  User u, char *accountNum);
 void checkAllAccounts(struct User u);
 void checkAccountBalance(struct User u, char *accountID);
+void transactionAcc(struct User u, char *accountNum);
 
 
 

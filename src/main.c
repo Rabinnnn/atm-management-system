@@ -151,7 +151,7 @@ void mainMenu(struct User u)
             sleep(2);
             mainMenu(u);
         }
-
+        transactionAcc(u, accountNum);
         transactionType:
         printf("Do you want to:\n        1-> Withdraw\n        2-> Deposit\n\n");
         char transaction[3]; 
