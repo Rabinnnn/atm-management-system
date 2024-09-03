@@ -120,6 +120,7 @@ void mainMenu(struct User u)
         checkDetailOfAccount(u, accountNum);
         break;
     case 4:
+        clearInputBuffer();
         checkAllAccounts(u);
         break;
     case 5:
