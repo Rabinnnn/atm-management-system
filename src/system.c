@@ -823,10 +823,10 @@ void transferAccount(struct User u, char *accountNum){
     newOwnerId = getUserId(newOwnerName);
 
     for(int i = 0; i < index; i++){
-        if(strcmp(arr[i].name, u.name) == 0 &&
-            arr[i].accountNbr == accountNum){
+        if(strcmp(arr[i].name, u.name) == 0 && strcmp(arr[i].accountNbr, accountNum) == 0){
             strcpy(arr[i].name, newOwnerName);
             arr[i].userId = newOwnerId;
+           
         }
     }
     
