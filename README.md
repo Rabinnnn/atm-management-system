@@ -13,6 +13,7 @@ This is an ATM platform developed in C. It allows the user to do the following a
 *   Check list of owned accounts
 *   Make transactions
 *   Transfer account owner
+*   Check account balance
 
 ## Usage
 
